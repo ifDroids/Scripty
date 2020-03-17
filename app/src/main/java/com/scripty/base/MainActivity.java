@@ -1,4 +1,4 @@
-package com.example.scripty;
+package com.scripty.base;
 
 import android.os.Bundle;
 import android.view.View;
