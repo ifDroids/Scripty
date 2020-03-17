@@ -13,8 +13,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.scripty.R;
+import com.example.scripty.ui.BaseFragment;
 
-public class SlideshowFragment extends Fragment {
+public class SlideshowFragment extends BaseFragment {
 
     private SlideshowViewModel slideshowViewModel;
 

@@ -13,8 +13,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.scripty.R;
+import com.example.scripty.ui.BaseFragment;
 
-public class GalleryFragment extends Fragment {
+public class GalleryFragment extends BaseFragment {
 
     private GalleryViewModel galleryViewModel;
 
