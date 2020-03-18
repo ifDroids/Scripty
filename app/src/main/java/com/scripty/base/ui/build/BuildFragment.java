@@ -46,6 +46,7 @@ public class BuildFragment extends BaseFragment {
                 Button btnOk = customLayout.findViewById(R.id.ok);
                 Button btnCancel = customLayout.findViewById(R.id.cancel);
 
+                final AlertDialog dialog = builder.create();
                 btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {}});
@@ -59,7 +60,14 @@ public class BuildFragment extends BaseFragment {
                     }
                 });
 
-                final AlertDialog dialog = builder.create();
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+
                 if (dialog.getWindow() != null) {
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 }
