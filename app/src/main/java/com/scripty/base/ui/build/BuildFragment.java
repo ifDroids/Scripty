@@ -19,6 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.scripty.base.R;
 import com.scripty.base.ui.BaseFragment;
+import com.scripty.base.ui.views.CommandLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,7 +56,7 @@ public class BuildFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
                         // append the command
-                        View command = View.inflate(_BaseActivity, R.layout.command_preference, null);
+                        CommandLayout command = new CommandLayout(_BaseActivity);
                         commandsContainer.addView(command);
                     }
                 });
