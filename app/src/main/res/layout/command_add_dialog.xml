@@ -25,19 +25,29 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_dialog_email"
+                android:src="@drawable/ic_command_touch"
                 android:layout_marginEnd="10dp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_dialog_dialer"
+                android:src="@drawable/ic_command_sleep"
                 android:layout_marginEnd="10dp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_dialog_info" />
+                android:src="@drawable/ic_command_hwkey" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_command_swipe" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_command_taphold" />
 
         </LinearLayout>
     </HorizontalScrollView>
