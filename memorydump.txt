@@ -1,0 +1,283 @@
+package com.example.android.navigationadvancedsample;
+
+import android.content.Intent;
+import android.util.SparseArray;
+import android.view.MenuItem;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.FragmentManager.BackStackEntry;
+import androidx.fragment.app.FragmentManager.OnBackStackChangedListener;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.navigation.NavController;
+import androidx.navigation.NavGraph;
+import androidx.navigation.fragment.NavHostFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemReselectedListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener;
+import java.util.Iterator;
+import java.util.List;
+import kotlin.Metadata;
+import kotlin.TypeCastException;
+import kotlin.collections.CollectionsKt;
+import kotlin.jvm.internal.Intrinsics;
+import kotlin.jvm.internal.Ref.BooleanRef;
+import kotlin.jvm.internal.Ref.IntRef;
+import kotlin.jvm.internal.Ref.ObjectRef;
+import org.jetbrains.annotations.NotNull;
+
+@Metadata(
+   mv = {1, 1, 16},
+   bv = {1, 0, 3},
+   k = 2,
+   d1 = {"\u0000N\n\u0000\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u000b\n\u0002\b\u0002\n\u0002\u0010\u000e\n\u0000\n\u0002\u0010\b\n\u0002\b\u0007\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010 \n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\u001a \u0010\u0000\u001a\u00020\u00012\u0006\u0010\u0002\u001a\u00020\u00032\u0006\u0010\u0004\u001a\u00020\u00052\u0006\u0010\u0006\u001a\u00020\u0007H\u0002\u001a\u0018\u0010\b\u001a\u00020\u00012\u0006\u0010\u0002\u001a\u00020\u00032\u0006\u0010\u0004\u001a\u00020\u0005H\u0002\u001a\u0010\u0010\t\u001a\u00020\n2\u0006\u0010\u000b\u001a\u00020\fH\u0002\u001a(\u0010\r\u001a\u00020\u00052\u0006\u0010\u0002\u001a\u00020\u00032\u0006\u0010\u000e\u001a\u00020\n2\u0006\u0010\u000f\u001a\u00020\f2\u0006\u0010\u0010\u001a\u00020\fH\u0002\u001a\u0014\u0010\u0011\u001a\u00020\u0007*\u00020\u00032\u0006\u0010\u0012\u001a\u00020\nH\u0002\u001a2\u0010\u0013\u001a\u00020\u0001*\u00020\u00142\f\u0010\u0015\u001a\b\u0012\u0004\u0012\u00020\f0\u00162\u0006\u0010\u0002\u001a\u00020\u00032\u0006\u0010\u0010\u001a\u00020\f2\u0006\u0010\u0017\u001a\u00020\u0018H\u0002\u001a\"\u0010\u0019\u001a\u00020\u0001*\u00020\u00142\f\u0010\u001a\u001a\b\u0012\u0004\u0012\u00020\n0\u001b2\u0006\u0010\u0002\u001a\u00020\u0003H\u0002\u001a6\u0010\u001c\u001a\b\u0012\u0004\u0012\u00020\u001e0\u001d*\u00020\u00142\f\u0010\u0015\u001a\b\u0012\u0004\u0012\u00020\f0\u00162\u0006\u0010\u0002\u001a\u00020\u00032\u0006\u0010\u0010\u001a\u00020\f2\u0006\u0010\u0017\u001a\u00020\u0018¨\u0006\u001f"},
+   d2 = {"attachNavHostFragment", "", "fragmentManager", "Landroidx/fragment/app/FragmentManager;", "navHostFragment", "Landroidx/navigation/fragment/NavHostFragment;", "isPrimaryNavFragment", "", "detachNavHostFragment", "getFragmentTag", "", "index", "", "obtainNavHostFragment", "fragmentTag", "navGraphId", "containerId", "isOnBackStack", "backStackName", "setupDeepLinks", "Lcom/google/android/material/bottomnavigation/BottomNavigationView;", "navGraphIds", "", "intent", "Landroid/content/Intent;", "setupItemReselected", "graphIdToTagMap", "Landroid/util/SparseArray;", "setupWithNavController", "Landroidx/lifecycle/LiveData;", "Landroidx/navigation/NavController;", "app_debug"}
+)
+public final class NavigationExtensionsKt {
+   @NotNull
+   public static final LiveData setupWithNavController(@NotNull final BottomNavigationView $this$setupWithNavController, @NotNull List navGraphIds, @NotNull final FragmentManager fragmentManager, int containerId, @NotNull Intent intent) {
+      Intrinsics.checkParameterIsNotNull($this$setupWithNavController, "$this$setupWithNavController");
+      Intrinsics.checkParameterIsNotNull(navGraphIds, "navGraphIds");
+      Intrinsics.checkParameterIsNotNull(fragmentManager, "fragmentManager");
+      Intrinsics.checkParameterIsNotNull(intent, "intent");
+      final SparseArray graphIdToTagMap = new SparseArray();
+      final MutableLiveData selectedNavController = new MutableLiveData();
+      final IntRef firstFragmentGraphId = new IntRef();
+      firstFragmentGraphId.element = 0;
+      Iterable $this$forEachIndexed$iv = (Iterable)navGraphIds;
+      int $i$f$forEachIndexed = false;
+      int index$iv = 0;
+      Iterator var11 = $this$forEachIndexed$iv.iterator();
+
+      while(var11.hasNext()) {
+         Object item$iv = var11.next();
+         int var13 = index$iv++;
+         boolean var14 = false;
+         if (var13 < 0) {
+            CollectionsKt.throwIndexOverflow();
+         }
+
+         int navGraphId = ((Number)item$iv).intValue();
+         int var18 = false;
+         String fragmentTag = getFragmentTag(var13);
+         NavHostFragment navHostFragment = obtainNavHostFragment(fragmentManager, fragmentTag, navGraphId, containerId);
+         NavController var28 = navHostFragment.getNavController();
+         Intrinsics.checkExpressionValueIsNotNull(var28, "navHostFragment.navController");
+         NavGraph var29 = var28.getGraph();
+         Intrinsics.checkExpressionValueIsNotNull(var29, "navHostFragment.navController.graph");
+         int graphId = var29.getId();
+         if (var13 == 0) {
+            firstFragmentGraphId.element = graphId;
+         }
+
+         int $i$f$set = false;
+         graphIdToTagMap.put(graphId, fragmentTag);
+         if ($this$setupWithNavController.getSelectedItemId() == graphId) {
+            selectedNavController.setValue(navHostFragment.getNavController());
+            attachNavHostFragment(fragmentManager, navHostFragment, var13 == 0);
+         } else {
+            detachNavHostFragment(fragmentManager, navHostFragment);
+         }
+      }
+
+      final ObjectRef selectedItemTag = new ObjectRef();
+      selectedItemTag.element = (String)graphIdToTagMap.get($this$setupWithNavController.getSelectedItemId());
+      final String firstFragmentTag = (String)graphIdToTagMap.get(firstFragmentGraphId.element);
+      final BooleanRef isOnFirstFragment = new BooleanRef();
+      isOnFirstFragment.element = Intrinsics.areEqual((String)selectedItemTag.element, firstFragmentTag);
+      $this$setupWithNavController.setOnNavigationItemSelectedListener((OnNavigationItemSelectedListener)(new OnNavigationItemSelectedListener() {
+         public final boolean onNavigationItemSelected(@NotNull MenuItem item) {
+            Intrinsics.checkParameterIsNotNull(item, "item");
+            boolean var10000;
+            if (fragmentManager.isStateSaved()) {
+               var10000 = false;
+            } else {
+               String newlySelectedItemTag = (String)graphIdToTagMap.get(item.getItemId());
+               if (Intrinsics.areEqual((String)selectedItemTag.element, newlySelectedItemTag) ^ true) {
+                  fragmentManager.popBackStack(firstFragmentTag, 1);
+                  Fragment var16 = fragmentManager.findFragmentByTag(newlySelectedItemTag);
+                  if (var16 == null) {
+                     throw new TypeCastException("null cannot be cast to non-null type androidx.navigation.fragment.NavHostFragment");
+                  }
+
+                  NavHostFragment selectedFragment = (NavHostFragment)var16;
+                  if (Intrinsics.areEqual(firstFragmentTag, newlySelectedItemTag) ^ true) {
+                     FragmentTransaction var4 = fragmentManager.beginTransaction().setCustomAnimations(0, 19, 5, 32).attach((Fragment)selectedFragment).setPrimaryNavigationFragment((Fragment)selectedFragment);
+                     boolean var5 = false;
+                     boolean var6 = false;
+                     FragmentTransaction $this$apply = var4;
+                     int var8 = false;
+                     SparseArray $this$forEach$iv = graphIdToTagMap;
+                     int $i$f$forEach = false;
+                     int index$iv = 0;
+
+                     for(int var12 = $this$forEach$iv.size(); index$iv < var12; ++index$iv) {
+                        $this$forEach$iv.keyAt(index$iv);
+                        String fragmentTagIter = (String)$this$forEach$iv.valueAt(index$iv);
+                        int var15 = false;
+                        if (Intrinsics.areEqual(fragmentTagIter, newlySelectedItemTag) ^ true) {
+                           Fragment var10001 = fragmentManager.findFragmentByTag(firstFragmentTag);
+                           if (var10001 == null) {
+                              Intrinsics.throwNpe();
+                           }
+
+                           $this$apply.detach(var10001);
+                        }
+                     }
+
+                     var4.addToBackStack(firstFragmentTag).setReorderingAllowed(true).commit();
+                  }
+
+                  selectedItemTag.element = newlySelectedItemTag;
+                  isOnFirstFragment.element = Intrinsics.areEqual((String)selectedItemTag.element, firstFragmentTag);
+                  selectedNavController.setValue(selectedFragment.getNavController());
+                  var10000 = true;
+               } else {
+                  var10000 = false;
+               }
+            }
+
+            return var10000;
+         }
+      }));
+      setupItemReselected($this$setupWithNavController, graphIdToTagMap, fragmentManager);
+      setupDeepLinks($this$setupWithNavController, navGraphIds, fragmentManager, containerId, intent);
+      fragmentManager.addOnBackStackChangedListener((OnBackStackChangedListener)(new OnBackStackChangedListener() {
+         public final void onBackStackChanged() {
+            if (!isOnFirstFragment.element) {
+               FragmentManager var10000 = fragmentManager;
+               String var10001 = firstFragmentTag;
+               Intrinsics.checkExpressionValueIsNotNull(var10001, "firstFragmentTag");
+               if (!NavigationExtensionsKt.isOnBackStack(var10000, var10001)) {
+                  $this$setupWithNavController.setSelectedItemId(firstFragmentGraphId.element);
+               }
+            }
+
+            NavController var6 = (NavController)selectedNavController.getValue();
+            if (var6 != null) {
+               NavController var1 = var6;
+               boolean var2 = false;
+               boolean var3 = false;
+               int var5 = false;
+               Intrinsics.checkExpressionValueIsNotNull(var1, "controller");
+               if (var1.getCurrentDestination() == null) {
+                  NavGraph var7 = var1.getGraph();
+                  Intrinsics.checkExpressionValueIsNotNull(var7, "controller.graph");
+                  var1.navigate(var7.getId());
+               }
+            }
+
+         }
+      }));
+      return (LiveData)selectedNavController;
+   }
+
+   private static final void setupDeepLinks(@NotNull BottomNavigationView $this$setupDeepLinks, List navGraphIds, FragmentManager fragmentManager, int containerId, Intent intent) {
+      Iterable $this$forEachIndexed$iv = (Iterable)navGraphIds;
+      int $i$f$forEachIndexed = false;
+      int index$iv = 0;
+      Iterator var8 = $this$forEachIndexed$iv.iterator();
+
+      while(var8.hasNext()) {
+         Object item$iv = var8.next();
+         int var10 = index$iv++;
+         boolean var11 = false;
+         if (var10 < 0) {
+            CollectionsKt.throwIndexOverflow();
+         }
+
+         int navGraphId = ((Number)item$iv).intValue();
+         int var15 = false;
+         String fragmentTag = getFragmentTag(var10);
+         NavHostFragment navHostFragment = obtainNavHostFragment(fragmentManager, fragmentTag, navGraphId, containerId);
+         if (navHostFragment.getNavController().handleDeepLink(intent)) {
+            int var10000 = $this$setupDeepLinks.getSelectedItemId();
+            NavController var10001 = navHostFragment.getNavController();
+            Intrinsics.checkExpressionValueIsNotNull(var10001, "navHostFragment.navController");
+            NavGraph var18 = var10001.getGraph();
+            Intrinsics.checkExpressionValueIsNotNull(var18, "navHostFragment.navController.graph");
+            if (var10000 != var18.getId()) {
+               var10001 = navHostFragment.getNavController();
+               Intrinsics.checkExpressionValueIsNotNull(var10001, "navHostFragment.navController");
+               var18 = var10001.getGraph();
+               Intrinsics.checkExpressionValueIsNotNull(var18, "navHostFragment.navController.graph");
+               $this$setupDeepLinks.setSelectedItemId(var18.getId());
+            }
+         }
+      }
+
+   }
+
+   private static final void setupItemReselected(@NotNull BottomNavigationView $this$setupItemReselected, final SparseArray graphIdToTagMap, final FragmentManager fragmentManager) {
+      $this$setupItemReselected.setOnNavigationItemReselectedListener((OnNavigationItemReselectedListener)(new OnNavigationItemReselectedListener() {
+         public final void onNavigationItemReselected(@NotNull MenuItem item) {
+            Intrinsics.checkParameterIsNotNull(item, "item");
+            String newlySelectedItemTag = (String)graphIdToTagMap.get(item.getItemId());
+            Fragment var10000 = fragmentManager.findFragmentByTag(newlySelectedItemTag);
+            if (var10000 == null) {
+               throw new TypeCastException("null cannot be cast to non-null type androidx.navigation.fragment.NavHostFragment");
+            } else {
+               NavHostFragment selectedFragment = (NavHostFragment)var10000;
+               NavController var5 = selectedFragment.getNavController();
+               Intrinsics.checkExpressionValueIsNotNull(var5, "selectedFragment.navController");
+               NavController navController = var5;
+               NavGraph var10001 = navController.getGraph();
+               Intrinsics.checkExpressionValueIsNotNull(var10001, "navController.graph");
+               navController.popBackStack(var10001.getStartDestination(), false);
+            }
+         }
+      }));
+   }
+
+   private static final void detachNavHostFragment(FragmentManager fragmentManager, NavHostFragment navHostFragment) {
+      fragmentManager.beginTransaction().detach((Fragment)navHostFragment).commitNow();
+   }
+
+   private static final void attachNavHostFragment(FragmentManager fragmentManager, NavHostFragment navHostFragment, boolean isPrimaryNavFragment) {
+      FragmentTransaction var3 = fragmentManager.beginTransaction().attach((Fragment)navHostFragment);
+      boolean var4 = false;
+      boolean var5 = false;
+      int var7 = false;
+      if (isPrimaryNavFragment) {
+         var3.setPrimaryNavigationFragment((Fragment)navHostFragment);
+      }
+
+      var3.commitNow();
+   }
+
+   private static final NavHostFragment obtainNavHostFragment(FragmentManager fragmentManager, String fragmentTag, int navGraphId, int containerId) {
+      NavHostFragment existingFragment = (NavHostFragment)fragmentManager.findFragmentByTag(fragmentTag);
+      if (existingFragment != null) {
+         boolean var6 = false;
+         boolean var7 = false;
+         int var9 = false;
+         return existingFragment;
+      } else {
+         NavHostFragment var10000 = NavHostFragment.create(navGraphId);
+         Intrinsics.checkExpressionValueIsNotNull(var10000, "NavHostFragment.create(navGraphId)");
+         NavHostFragment navHostFragment = var10000;
+         fragmentManager.beginTransaction().add(containerId, (Fragment)navHostFragment, fragmentTag).commitNow();
+         return navHostFragment;
+      }
+   }
+
+   private static final boolean isOnBackStack(@NotNull FragmentManager $this$isOnBackStack, String backStackName) {
+      int backStackCount = $this$isOnBackStack.getBackStackEntryCount();
+      int index = 0;
+
+      for(int var4 = backStackCount; index < var4; ++index) {
+         BackStackEntry var10000 = $this$isOnBackStack.getBackStackEntryAt(index);
+         Intrinsics.checkExpressionValueIsNotNull(var10000, "getBackStackEntryAt(index)");
+         if (Intrinsics.areEqual(var10000.getName(), backStackName)) {
+            return true;
+         }
+      }
+
+      return false;
+   }
+
+   private static final String getFragmentTag(int index) {
+      return "bottomNavigation#" + index;
+   }
+}

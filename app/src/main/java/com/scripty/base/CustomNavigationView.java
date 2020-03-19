@@ -23,8 +23,11 @@ import java.util.List;
 
 public class CustomNavigationView extends NavigationView {
 
-
     private int selectedItemId;
+    private String selectedItemTag= "";
+    private boolean isOnFirstFragment;
+    private int firstFragmentGraphId  ;
+
     public CustomNavigationView(@NonNull Context context) {
         super(context);
     }
@@ -51,12 +54,9 @@ public class CustomNavigationView extends NavigationView {
 //    }
 
     // custom methods
-   private FragmentManager mManager;
-    private String selectedItemTag;
-    private boolean isOnFirstFragment;
-    private int firstFragmentGraphId  ;
-    public LiveData setupWithNavController(NavigationView test, List<Integer> navGraphIds, final FragmentManager fragmentManager, int containerId, Intent intent) {
-        mManager = fragmentManager;
+
+    public LiveData setupWithNavController( List<Integer> navGraphIds, final FragmentManager fragmentManager, int containerId, Intent intent) {
+
         final SparseArray<String> graphIdToTagMap = new SparseArray<>();
 
         final MutableLiveData selectedNavController = new MutableLiveData<NavController>();
@@ -86,6 +86,9 @@ public class CustomNavigationView extends NavigationView {
 
         selectedItemTag = graphIdToTagMap.get(selectedItemId);
         final String firstFragmentTag = graphIdToTagMap.get(firstFragmentGraphId);
+
+        // custom edit:
+        //selectedItemId="";
         isOnFirstFragment = selectedItemTag.equals(firstFragmentTag);
 
         this.setNavigationItemSelectedListener(new OnNavigationItemSelectedListener() {
