@@ -1,8 +1,10 @@
 package com.scripty.base;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.MenuItem;
 
@@ -23,10 +25,12 @@ import java.util.List;
 
 public class CustomNavigationView extends NavigationView {
 
-    private int selectedItemId;
-    private String selectedItemTag= "";
+    private int selectedItemId = R.navigation.home;
+    private String selectedItemTag= "customSidebar#"+R.navigation.home;
     private boolean isOnFirstFragment;
     private int firstFragmentGraphId  ;
+    SparseArray<String> graphIdToTagMap = new SparseArray<>();
+
 
     public CustomNavigationView(@NonNull Context context) {
         super(context);
@@ -57,8 +61,6 @@ public class CustomNavigationView extends NavigationView {
 
     public LiveData setupWithNavController( List<Integer> navGraphIds, final FragmentManager fragmentManager, int containerId, Intent intent) {
 
-        final SparseArray<String> graphIdToTagMap = new SparseArray<>();
-
         final MutableLiveData selectedNavController = new MutableLiveData<NavController>();
 
         firstFragmentGraphId = 0 ;
@@ -84,11 +86,11 @@ public class CustomNavigationView extends NavigationView {
             index++;
         }
 
-        selectedItemTag = graphIdToTagMap.get(selectedItemId);
+        if (graphIdToTagMap.get(selectedItemId) != null)
+            selectedItemTag = graphIdToTagMap.get(selectedItemId);
+
         final String firstFragmentTag = graphIdToTagMap.get(firstFragmentGraphId);
 
-        // custom edit:
-        //selectedItemId="";
         isOnFirstFragment = selectedItemTag.equals(firstFragmentTag);
 
         this.setNavigationItemSelectedListener(new OnNavigationItemSelectedListener() {
@@ -176,7 +178,8 @@ public class CustomNavigationView extends NavigationView {
         return false;
     }
 
-    private void setupDeepLinks(List<Integer> navGraphIds ,FragmentManager fragmentManager, int containerId,Intent intent) {
+    @SuppressLint("ResourceType")
+    private void setupDeepLinks(List<Integer> navGraphIds , FragmentManager fragmentManager, int containerId, Intent intent) {
 
         int index =0;
         for(index = 0 ; index < navGraphIds.size() ; index++){
@@ -212,7 +215,7 @@ public class CustomNavigationView extends NavigationView {
     }
 
     private String getFragmentTag(int index) {
-       return "bottomNavigation#"+index;
+       return "customSidebar#"+index;
     }
 
     private void attachNavHostFragment(
