@@ -12,11 +12,12 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.scripty.base.libs.BaseFragmentSaveView.wrappers.BaseActivityFragmentLoader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivityFragmentLoader {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -25,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.nav_view)
     NavigationView mNavView;
 
-    Bundle state;
     private AppBarConfiguration mAppBarConfiguration;
 
 
@@ -44,9 +44,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(mNavView, navController);
-
-
-
     }
 
     @Override
