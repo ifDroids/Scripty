@@ -3,60 +3,73 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/round_frame_bg_command"
-    android:padding="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Command"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:text="Command" />
 
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
+
+    <!--commands-->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:weightSum="1">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/command_touch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="0.2"
+            android:src="@drawable/ic_command_touch"
+            android:contentDescription="@string/placeholder" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_command_touch"
-                android:layout_marginEnd="10dp"/>
+        <ImageView
+            android:id="@+id/command_sleep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:src="@drawable/ic_command_sleep"
+            android:contentDescription="@string/placeholder"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_command_sleep"
-                android:layout_marginEnd="10dp"/>
+        <ImageView
+            android:id="@+id/command_hardware"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:src="@drawable/ic_command_hwkey"
+            android:contentDescription="@string/placeholder"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_command_hwkey" />
+        <ImageView
+            android:id="@+id/command_swipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:src="@drawable/ic_command_swipe"
+            android:contentDescription="@string/placeholder"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_command_swipe" />
+        <ImageView
+            android:id="@+id/command_touchhold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:src="@drawable/ic_command_taphold"
+            android:contentDescription="@string/placeholder"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_command_taphold" />
-
-        </LinearLayout>
-    </HorizontalScrollView>
+    </LinearLayout>
 
     <TextView
+        android:id="@+id/parameters_and_command"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Parameters" />
 
+    <!--params touch-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,16 +79,37 @@
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            android:layout_weight="0.5" />
 
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5" />
 
     </LinearLayout>
 
+    <!--params sleep-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="0.5" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5" />
+
+    </LinearLayout>
+
+    <!-- bottom buttons-->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
