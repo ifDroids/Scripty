@@ -18,7 +18,6 @@ public class BaseFragmentSaveView extends Fragment {
 
     private OnFragmentViewLoadListener viewLoaderListener;
     private OnFragmentViewSaveListener viewSaveListener;
-    private int currentLayoutID;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -27,27 +26,20 @@ public class BaseFragmentSaveView extends Fragment {
         viewLoaderListener = (OnFragmentViewLoadListener) context;
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        View v = viewLoaderListener.onFragmentViewLoadNow();
-        View stockLayout = inflater.inflate(currentLayoutID, container, false);
-
-        if (stockLayout == null) throw new NullPointerException("Could not find fragment layout.Did you call setLayoutID() before super.onCreateView() at your fragment?");
-
-        return v == null ? stockLayout : v ;
-    }
-
-    protected void setLayoutID(@LayoutRes int id){
-        currentLayoutID = id;
-    }
-
     protected void saveCurrentViewState(View v){
 
         //here, we can make custom edits like :
         // * Clean up a textbox or something
         viewSaveListener.onFragmentViewSaveNow(v);
+    }
+
+    protected View onCreateSavedView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, @LayoutRes int layoutID) {
+        View v = viewLoaderListener.onFragmentViewLoadNow();
+        View stockLayout = inflater.inflate(layoutID, container, false);
+
+        if (stockLayout == null) throw new NullPointerException("Could not find fragment layout.Did you call setLayoutID() before super.onCreateView() at your fragment?");
+
+        return v == null ? stockLayout : v ;
     }
 
 }

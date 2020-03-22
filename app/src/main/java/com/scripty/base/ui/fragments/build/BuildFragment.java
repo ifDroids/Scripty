@@ -33,10 +33,7 @@ public class BuildFragment extends BaseFragmentSaveView {
     FloatingActionButton mCommandAdd;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
-        setLayoutID(R.layout.fragment_home);
-        final View root = super.onCreateView(inflater,container,savedInstanceState);
-
-        if (root == null ) throw new NullPointerException("Could not find fragment layout.Did you call setLayoutID() before super.onCreateView() at your fragment?");
+        final View root = onCreateSavedView(inflater,container,savedInstanceState,R.layout.fragment_home);
 
         final LinearLayout commandsContainer = root.findViewById(R.id.commands_container);
 
@@ -91,7 +88,7 @@ public class BuildFragment extends BaseFragmentSaveView {
                 }
             }
         });
-        
+
         return root;
     }
 
