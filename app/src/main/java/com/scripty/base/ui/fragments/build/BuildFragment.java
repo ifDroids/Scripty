@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -63,7 +64,18 @@ public class BuildFragment extends BaseFragmentSaveView {
                         @Override
                         public void onClick(View v) {
                             // append the command
-                            CommandLayout command = new CommandLayout(getActivity());
+                            final CommandLayout command = new CommandLayout(getActivity());
+
+                            // click listener for delete
+                            final ImageView deleteCommand = command.findViewById(R.id.delete_command);
+                            deleteCommand.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Log.e("dsdsds","patithika");
+                                    commandsContainer.removeView(command);
+                                }
+                            });
+
                             commandsContainer.removeView(command);
                             commandsContainer.addView(command);
 
