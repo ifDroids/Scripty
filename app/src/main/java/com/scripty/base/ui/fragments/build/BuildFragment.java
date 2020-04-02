@@ -80,6 +80,7 @@ public class BuildFragment extends BaseFragmentSaveView {
                             switch (selectedCommand){
                                 case 0:
                                     command.migrateIcon(R.drawable.ic_command_touch);
+
                                     break;
                                 case 1:
                                     command.migrateIcon(R.drawable.ic_command_sleep);
@@ -94,6 +95,8 @@ public class BuildFragment extends BaseFragmentSaveView {
                                     command.migrateIcon(R.drawable.ic_command_taphold);
                                     break;
                             }
+                            command.handleTextViews(selectedCommand);
+
                             // click listener for delete
                             final ImageView deleteCommand = command.findViewById(R.id.delete_command);
                             deleteCommand.setOnClickListener(new View.OnClickListener() {

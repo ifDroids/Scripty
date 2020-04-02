@@ -52,6 +52,40 @@ public class CommandLayout extends LinearLayout {
          img.setImageDrawable(ContextCompat.getDrawable(mActivity,id));
     }
 
+    public void handleTextViews(int command){
+        switch (command){
+            case 0:
+            case 2:
+                mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
+                mThisView.findViewById(R.id.tv2).setVisibility(View.VISIBLE);
+                mThisView.findViewById(R.id.tv3).setVisibility(View.INVISIBLE);
+                mThisView.findViewById(R.id.tv4).setVisibility(View.INVISIBLE);
+                mThisView.findViewById(R.id.tv5).setVisibility(View.INVISIBLE);
+                break;
+            case 1:
+                mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
+                mThisView.findViewById(R.id.tv2).setVisibility(View.INVISIBLE);
+                mThisView.findViewById(R.id.tv3).setVisibility(View.INVISIBLE);
+                mThisView.findViewById(R.id.tv4).setVisibility(View.INVISIBLE);
+                mThisView.findViewById(R.id.tv5).setVisibility(View.INVISIBLE);
+                break;
+            case 3:
+                mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
+                mThisView.findViewById(R.id.tv2).setVisibility(View.VISIBLE);
+                mThisView.findViewById(R.id.tv3).setVisibility(View.VISIBLE);
+                mThisView.findViewById(R.id.tv4).setVisibility(View.VISIBLE);
+                mThisView.findViewById(R.id.tv5).setVisibility(View.VISIBLE);
+                break;
+            case 4:
+                mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
+                mThisView.findViewById(R.id.tv2).setVisibility(View.VISIBLE);
+                mThisView.findViewById(R.id.tv3).setVisibility(View.VISIBLE);
+                mThisView.findViewById(R.id.tv4).setVisibility(View.INVISIBLE);
+                mThisView.findViewById(R.id.tv5).setVisibility(View.INVISIBLE);
+                break;
+        }
+    }
+
 
     // default constructor
     public CommandLayout(Context context, @Nullable AttributeSet attrs) {
