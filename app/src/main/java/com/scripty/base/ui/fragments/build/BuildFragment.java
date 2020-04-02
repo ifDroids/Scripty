@@ -26,6 +26,9 @@ import com.scripty.base.libs.BaseFragmentSaveView.wrappers.BaseFragmentSaveView;
 import com.scripty.base.models.Command;
 import com.scripty.base.ui.views.CommandLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -42,6 +45,8 @@ public class BuildFragment extends BaseFragmentSaveView {
     private EditText edit21;
     private EditText edit22;
     private EditText edit23;
+
+    private List<Command> allCommands = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         final View root = onCreateSavedView(inflater, container, savedInstanceState, R.layout.fragment_home);
@@ -128,6 +133,7 @@ public class BuildFragment extends BaseFragmentSaveView {
                             }
                             curCommand.setLayout(commandLayout);
                             commandLayout.handleTextViews(curCommand);
+                            allCommands.add(curCommand);
 
 
                             // Finally add the rest UI stuff....
