@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.scripty.base.R;
 import com.scripty.base.libs.BaseFragmentSaveView.wrappers.BaseFragmentSaveView;
+import com.scripty.base.models.Command;
 import com.scripty.base.ui.views.CommandLayout;
 
 
@@ -34,7 +35,9 @@ public class BuildFragment extends BaseFragmentSaveView {
     @BindView(R.id.command_add)
     FloatingActionButton mCommandAdd;
     private Context mContext;
-    private int selectedCommand = 0 ;//0 is the first command,1 is the second etc...
+
+    private Command newCommand;
+    private Command curCommand;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         final View root = onCreateSavedView(inflater, container, savedInstanceState, R.layout.fragment_home);
@@ -62,8 +65,11 @@ public class BuildFragment extends BaseFragmentSaveView {
                     Button btnAdd = customLayout.findViewById(R.id.add);
                     Button btnCancel = customLayout.findViewById(R.id.cancel);
 
+                    // create new command object
+                    newCommand = new Command();
                     // implement listeners
                     initDialogListeners(customLayout);
+                    newCommand.setCommand(curCommand.getCommand());
 
                     final AlertDialog dialog = builder.create();
                     btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -77,32 +83,30 @@ public class BuildFragment extends BaseFragmentSaveView {
                         public void onClick(View v) {
                             // append the command
                             final CommandLayout command = new CommandLayout(getActivity());
-                            switch (selectedCommand){
-                                case 0:
+                            switch (newCommand.getCommand()){
+                                case TOUCH:
                                     command.migrateIcon(R.drawable.ic_command_touch);
-
                                     break;
-                                case 1:
+                                case SLEEP:
                                     command.migrateIcon(R.drawable.ic_command_sleep);
                                     break;
-                                case 2:
+                                case HARDWARE_BUTTON:
                                     command.migrateIcon(R.drawable.ic_command_hwkey);
                                     break;
-                                case 3:
+                                case SWIPE:
                                     command.migrateIcon(R.drawable.ic_command_swipe);
                                     break;
-                                case 4:
+                                case TOUCH_AND_HOLD:
                                     command.migrateIcon(R.drawable.ic_command_taphold);
                                     break;
                             }
-                            command.handleTextViews(selectedCommand);
+                            command.handleTextViews(newCommand.getCommand());
 
                             // click listener for delete
                             final ImageView deleteCommand = command.findViewById(R.id.delete_command);
                             deleteCommand.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Log.e("dsdsds", "patithika");
                                     commandsContainer.removeView(command);
                                 }
                             });
@@ -141,8 +145,7 @@ public class BuildFragment extends BaseFragmentSaveView {
 
     @SuppressLint("SetTextI18n")
     private void initDialogListeners(View v) {
-
-
+        curCommand = new Command();
 
         final ImageView commandTouch = v.findViewById(R.id.command_touch);
         final ImageView commandSleep = v.findViewById(R.id.command_sleep);
@@ -177,6 +180,7 @@ public class BuildFragment extends BaseFragmentSaveView {
 
             @Override
             public void onClick(View v) {
+
                 // clean up all
                 commandTouch.setColorFilter(null);
                 commandSleep.setColorFilter(null);
@@ -199,7 +203,8 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit11.setHint("X: ");
                         edit12.setHint("Y: ");
 
-                        selectedCommand=0;
+                        newCommand.setCommand(Command.CommandType.TOUCH);
+                        curCommand.setCommand(Command.CommandType.TOUCH);
                         break;
                     case R.id.command_sleep:
                         tvCommand.setText( params + " (Sleep)"  );
@@ -214,7 +219,9 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit12.setVisibility(View.GONE);
                         // add the corresponding text hint
                         edit11.setHint("Duration (ms): ");
-                        selectedCommand=1;
+
+                        newCommand.setCommand(Command.CommandType.SLEEP);
+                        curCommand.setCommand(Command.CommandType.SLEEP);
                         break;
                     case R.id.command_hardware:
                         tvCommand.setText( params + " (Hardware Button)"  );
@@ -231,7 +238,9 @@ public class BuildFragment extends BaseFragmentSaveView {
                         // add the corresponding text hint
                         edit11.setHint("Button: ");
                         edit12.setHint("Hold (ms): ");
-                        selectedCommand=2;
+
+                        newCommand.setCommand(Command.CommandType.HARDWARE_BUTTON);
+                        curCommand.setCommand(Command.CommandType.HARDWARE_BUTTON);
                         break;
                     case R.id.command_swipe:
                         tvCommand.setText( params + " (Swipe)"  );
@@ -248,7 +257,9 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit21.setHint("toX: ");
                         edit22.setHint("toY: ");
                         edit23.setHint("Speed (ms): ");
-                        selectedCommand=3;
+
+                        newCommand.setCommand(Command.CommandType.SWIPE);
+                        curCommand.setCommand(Command.CommandType.SWIPE);
                         break;
                     case R.id.command_touchhold:
                         tvCommand.setText( params + " (Touch and hold)"  );
@@ -264,7 +275,9 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit21.setHint("X:");
                         edit22.setHint("Y:");
                         edit23.setHint("Hold (ms):");
-                        selectedCommand=4;
+
+                        newCommand.setCommand(Command.CommandType.TOUCH_AND_HOLD);
+                        curCommand.setCommand(Command.CommandType.TOUCH_AND_HOLD);
                         break;
                 }
             }

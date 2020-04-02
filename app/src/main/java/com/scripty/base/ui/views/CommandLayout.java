@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.scripty.base.R;
+import com.scripty.base.models.Command;
 
 public class CommandLayout extends LinearLayout {
 
@@ -52,31 +53,31 @@ public class CommandLayout extends LinearLayout {
          img.setImageDrawable(ContextCompat.getDrawable(mActivity,id));
     }
 
-    public void handleTextViews(int command){
+    public void handleTextViews(Command.CommandType command){
         switch (command){
-            case 0:
-            case 2:
+            case TOUCH:
+            case HARDWARE_BUTTON:
                 mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
                 mThisView.findViewById(R.id.tv2).setVisibility(View.VISIBLE);
                 mThisView.findViewById(R.id.tv3).setVisibility(View.INVISIBLE);
                 mThisView.findViewById(R.id.tv4).setVisibility(View.INVISIBLE);
                 mThisView.findViewById(R.id.tv5).setVisibility(View.INVISIBLE);
                 break;
-            case 1:
+            case SLEEP:
                 mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
                 mThisView.findViewById(R.id.tv2).setVisibility(View.INVISIBLE);
                 mThisView.findViewById(R.id.tv3).setVisibility(View.INVISIBLE);
                 mThisView.findViewById(R.id.tv4).setVisibility(View.INVISIBLE);
                 mThisView.findViewById(R.id.tv5).setVisibility(View.INVISIBLE);
                 break;
-            case 3:
+            case SWIPE:
                 mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
                 mThisView.findViewById(R.id.tv2).setVisibility(View.VISIBLE);
                 mThisView.findViewById(R.id.tv3).setVisibility(View.VISIBLE);
                 mThisView.findViewById(R.id.tv4).setVisibility(View.VISIBLE);
                 mThisView.findViewById(R.id.tv5).setVisibility(View.VISIBLE);
                 break;
-            case 4:
+            case TOUCH_AND_HOLD:
                 mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
                 mThisView.findViewById(R.id.tv2).setVisibility(View.VISIBLE);
                 mThisView.findViewById(R.id.tv3).setVisibility(View.VISIBLE);
