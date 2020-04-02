@@ -37,12 +37,18 @@ public class BuildFragment extends BaseFragmentSaveView {
 
     private Command curCommand;
 
+    private EditText edit11;
+    private EditText edit12;
+    private EditText edit21;
+    private EditText edit22;
+    private EditText edit23;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         final View root = onCreateSavedView(inflater, container, savedInstanceState, R.layout.fragment_home);
 
         mContext = getContext();
-        if (mContext == null ){
-            Log.e("BuildFragment","Could not get context.Exiting...");
+        if (mContext == null) {
+            Log.e("BuildFragment", "Could not get context.Exiting...");
             System.exit(0);
         }
 
@@ -65,7 +71,15 @@ public class BuildFragment extends BaseFragmentSaveView {
 
                     // create new command object
                     curCommand = new Command();
+                    // its the initial
+                    curCommand.setCommand(Command.CommandType.TOUCH);
+
                     // implement listeners
+                    edit11 = customLayout.findViewById(R.id.edit_11);
+                    edit12 = customLayout.findViewById(R.id.edit_12);
+                    edit21 = customLayout.findViewById(R.id.edit_21);
+                    edit22 = customLayout.findViewById(R.id.edit_22);
+                    edit23 = customLayout.findViewById(R.id.edit_23);
                     initDialogListeners(customLayout);
 
 
@@ -81,25 +95,41 @@ public class BuildFragment extends BaseFragmentSaveView {
                         public void onClick(View v) {
                             // append the commandLayout
                             final CommandLayout commandLayout = new CommandLayout(getActivity());
-                            switch (curCommand.getCommand()){
+                            switch (curCommand.getCommand()) {
                                 case TOUCH:
                                     commandLayout.migrateIcon(R.drawable.ic_command_touch);
+                                    curCommand.setParams("", Integer.parseInt(edit11.getText().toString()), Integer.parseInt(edit12.getText().toString()));
                                     break;
                                 case SLEEP:
                                     commandLayout.migrateIcon(R.drawable.ic_command_sleep);
+                                    curCommand.setParams("", Integer.parseInt(edit11.getText().toString()));
                                     break;
                                 case HARDWARE_BUTTON:
                                     commandLayout.migrateIcon(R.drawable.ic_command_hwkey);
+                                    curCommand.setParams(edit11.getText().toString(), Integer.parseInt(edit12.getText().toString()));
                                     break;
                                 case SWIPE:
                                     commandLayout.migrateIcon(R.drawable.ic_command_swipe);
+                                    curCommand.setParams("",
+                                            Integer.parseInt(edit11.getText().toString()),
+                                            Integer.parseInt(edit12.getText().toString()),
+                                            Integer.parseInt(edit21.getText().toString()),
+                                            Integer.parseInt(edit22.getText().toString()),
+                                            Integer.parseInt(edit23.getText().toString()));
                                     break;
                                 case TOUCH_AND_HOLD:
                                     commandLayout.migrateIcon(R.drawable.ic_command_taphold);
+                                    curCommand.setParams("",
+                                            Integer.parseInt(edit21.getText().toString()),
+                                            Integer.parseInt(edit22.getText().toString()),
+                                            Integer.parseInt(edit23.getText().toString()));
                                     break;
                             }
                             curCommand.setLayout(commandLayout);
-                            commandLayout.handleTextViews(curCommand.getCommand());
+                            commandLayout.handleTextViews(curCommand);
+
+
+                            // Finally add the rest UI stuff....
 
                             // click listener for delete
                             final ImageView deleteCommand = commandLayout.findViewById(R.id.delete_command);
@@ -151,18 +181,13 @@ public class BuildFragment extends BaseFragmentSaveView {
         final ImageView commandSwipe = v.findViewById(R.id.command_swipe);
         final ImageView commandTouchHold = v.findViewById(R.id.command_touchhold);
 
-        final EditText edit11 = v.findViewById(R.id.edit_11);
-        final EditText edit12 = v.findViewById(R.id.edit_12);
-        final EditText edit21 = v.findViewById(R.id.edit_21);
-        final EditText edit22 = v.findViewById(R.id.edit_22);
-        final EditText edit23 = v.findViewById(R.id.edit_23);
 
         final TextView tvCommand = v.findViewById(R.id.parameters_and_command);
-        final String params=tvCommand.getText()+"";
+        final String params = tvCommand.getText() + "";
 
         // init
-        tvCommand.setText( params + " (Single Touch)"  );
-        commandTouch.setColorFilter(ContextCompat.getColor(mContext,R.color.colorAccent));
+        tvCommand.setText(params + " (Single Touch)");
+        commandTouch.setColorFilter(ContextCompat.getColor(mContext, R.color.colorAccent));
         // show the first row of edittexts
         edit11.setVisibility(View.VISIBLE);
         edit12.setVisibility(View.VISIBLE);
@@ -188,8 +213,8 @@ public class BuildFragment extends BaseFragmentSaveView {
 
                 switch (v.getId()) {
                     case R.id.command_touch:
-                        tvCommand.setText( params + " (Single Touch)"  );
-                        commandTouch.setColorFilter(ContextCompat.getColor(mContext,R.color.colorAccent));
+                        tvCommand.setText(params + " (Single Touch)");
+                        commandTouch.setColorFilter(ContextCompat.getColor(mContext, R.color.colorAccent));
                         // show the first row of edittexts
                         edit11.setVisibility(View.VISIBLE);
                         edit12.setVisibility(View.VISIBLE);
@@ -202,10 +227,10 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit12.setHint("Y: ");
 
                         curCommand.setCommand(Command.CommandType.TOUCH);
-                        break;
+                         break;
                     case R.id.command_sleep:
-                        tvCommand.setText( params + " (Sleep)"  );
-                        commandSleep.setColorFilter(ContextCompat.getColor(mContext,R.color.colorAccent));
+                        tvCommand.setText(params + " (Sleep)");
+                        commandSleep.setColorFilter(ContextCompat.getColor(mContext, R.color.colorAccent));
 
                         // show the first row of edittexts
                         edit11.setVisibility(View.VISIBLE);
@@ -218,10 +243,11 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit11.setHint("Duration (ms): ");
 
                         curCommand.setCommand(Command.CommandType.SLEEP);
+
                         break;
                     case R.id.command_hardware:
-                        tvCommand.setText( params + " (Hardware Button)"  );
-                        commandHardwareKey.setColorFilter(ContextCompat.getColor(mContext,R.color.colorAccent));
+                        tvCommand.setText(params + " (Hardware Button)");
+                        commandHardwareKey.setColorFilter(ContextCompat.getColor(mContext, R.color.colorAccent));
 
                         // show the first row of edittexts
                         edit11.setVisibility(View.VISIBLE);
@@ -236,10 +262,11 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit12.setHint("Hold (ms): ");
 
                         curCommand.setCommand(Command.CommandType.HARDWARE_BUTTON);
+
                         break;
                     case R.id.command_swipe:
-                        tvCommand.setText( params + " (Swipe)"  );
-                        commandSwipe.setColorFilter(ContextCompat.getColor(mContext,R.color.colorAccent));
+                        tvCommand.setText(params + " (Swipe)");
+                        commandSwipe.setColorFilter(ContextCompat.getColor(mContext, R.color.colorAccent));
                         // hide nothing
                         edit21.setVisibility(View.VISIBLE);
                         edit22.setVisibility(View.VISIBLE);
@@ -254,10 +281,11 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit23.setHint("Speed (ms): ");
 
                         curCommand.setCommand(Command.CommandType.SWIPE);
+
                         break;
                     case R.id.command_touchhold:
-                        tvCommand.setText( params + " (Touch and hold)"  );
-                        commandTouchHold.setColorFilter(ContextCompat.getColor(mContext,R.color.colorAccent));
+                        tvCommand.setText(params + " (Touch and hold)");
+                        commandTouchHold.setColorFilter(ContextCompat.getColor(mContext, R.color.colorAccent));
 
                         //hide first row
                         edit11.setVisibility(View.GONE);
@@ -271,6 +299,8 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit23.setHint("Hold (ms):");
 
                         curCommand.setCommand(Command.CommandType.TOUCH_AND_HOLD);
+
+
                         break;
                 }
             }

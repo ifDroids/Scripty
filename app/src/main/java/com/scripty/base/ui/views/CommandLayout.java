@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -53,15 +54,28 @@ public class CommandLayout extends LinearLayout {
          img.setImageDrawable(ContextCompat.getDrawable(mActivity,id));
     }
 
-    public void handleTextViews(Command.CommandType command){
-        switch (command){
+    @SuppressLint("SetTextI18n")
+    public void handleTextViews(Command command){
+        switch (command.getCommand()){
             case TOUCH:
+                mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
+                mThisView.findViewById(R.id.tv2).setVisibility(View.VISIBLE);
+                mThisView.findViewById(R.id.tv3).setVisibility(View.INVISIBLE);
+                mThisView.findViewById(R.id.tv4).setVisibility(View.INVISIBLE);
+                mThisView.findViewById(R.id.tv5).setVisibility(View.INVISIBLE);
+                ( (TextView) mThisView.findViewById(R.id.tv1)).setText("X: "+command.getX());
+                ( (TextView) mThisView.findViewById(R.id.tv2)).setText("Y: "+command.getY());
+
+                break;
             case HARDWARE_BUTTON:
                 mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
                 mThisView.findViewById(R.id.tv2).setVisibility(View.VISIBLE);
                 mThisView.findViewById(R.id.tv3).setVisibility(View.INVISIBLE);
                 mThisView.findViewById(R.id.tv4).setVisibility(View.INVISIBLE);
                 mThisView.findViewById(R.id.tv5).setVisibility(View.INVISIBLE);
+
+                ( (TextView) mThisView.findViewById(R.id.tv1)).setText("Button: "+command.getHwButton());
+                ( (TextView) mThisView.findViewById(R.id.tv2)).setText("Duration: "+command.getDuration()+ " ms");
                 break;
             case SLEEP:
                 mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
@@ -69,6 +83,7 @@ public class CommandLayout extends LinearLayout {
                 mThisView.findViewById(R.id.tv3).setVisibility(View.INVISIBLE);
                 mThisView.findViewById(R.id.tv4).setVisibility(View.INVISIBLE);
                 mThisView.findViewById(R.id.tv5).setVisibility(View.INVISIBLE);
+                ( (TextView) mThisView.findViewById(R.id.tv1)).setText("Duration: "+command.getDuration() + " ms");
                 break;
             case SWIPE:
                 mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
@@ -76,6 +91,11 @@ public class CommandLayout extends LinearLayout {
                 mThisView.findViewById(R.id.tv3).setVisibility(View.VISIBLE);
                 mThisView.findViewById(R.id.tv4).setVisibility(View.VISIBLE);
                 mThisView.findViewById(R.id.tv5).setVisibility(View.VISIBLE);
+                ( (TextView) mThisView.findViewById(R.id.tv1)).setText("fromX: "+command.getFromX());
+                ( (TextView) mThisView.findViewById(R.id.tv2)).setText("fromY: "+command.getFromY() );
+                ( (TextView) mThisView.findViewById(R.id.tv3)).setText("toX: "+command.getX());
+                ( (TextView) mThisView.findViewById(R.id.tv4)).setText("toY: "+command.getY());
+                ( (TextView) mThisView.findViewById(R.id.tv5)).setText("Speed: "+command.getSpeed()+ " ms");
                 break;
             case TOUCH_AND_HOLD:
                 mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
@@ -83,6 +103,9 @@ public class CommandLayout extends LinearLayout {
                 mThisView.findViewById(R.id.tv3).setVisibility(View.VISIBLE);
                 mThisView.findViewById(R.id.tv4).setVisibility(View.INVISIBLE);
                 mThisView.findViewById(R.id.tv5).setVisibility(View.INVISIBLE);
+                ( (TextView) mThisView.findViewById(R.id.tv1)).setText("X: "+command.getX());
+                ( (TextView) mThisView.findViewById(R.id.tv2)).setText("Y: "+command.getY() );
+                ( (TextView) mThisView.findViewById(R.id.tv3)).setText("Duration: "+command.getX()+ " ms");
                 break;
         }
     }
