@@ -77,12 +77,14 @@
         android:weightSum="1">
 
         <EditText
+            android:id="@+id/edit_11"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_weight="0.5" />
 
         <EditText
+            android:id="@+id/edit_12"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5" />
@@ -94,18 +96,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="1">
+        android:weightSum="0.9">
 
         <EditText
+            android:id="@+id/edit_21"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:layout_weight="0.5" />
+            android:layout_weight="0.3" />
 
         <EditText
+            android:id="@+id/edit_22"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5" />
+            android:layout_weight="0.3" />
+
+        <EditText
+            android:id="@+id/edit_23"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3" />
 
     </LinearLayout>
 

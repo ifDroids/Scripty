@@ -3,6 +3,7 @@ package com.scripty.base.ui.fragments.build;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,12 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,8 +25,6 @@ import com.scripty.base.R;
 import com.scripty.base.libs.BaseFragmentSaveView.wrappers.BaseFragmentSaveView;
 import com.scripty.base.ui.views.CommandLayout;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,9 +33,16 @@ public class BuildFragment extends BaseFragmentSaveView {
 
     @BindView(R.id.command_add)
     FloatingActionButton mCommandAdd;
+    private Context mContext;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         final View root = onCreateSavedView(inflater, container, savedInstanceState, R.layout.fragment_home);
+
+        mContext = getContext();
+        if (mContext == null ){
+            Log.e("BuildFragment","Could not get context.Exiting...");
+            System.exit(0);
+        }
 
         final LinearLayout commandsContainer = root.findViewById(R.id.commands_container);
 
@@ -113,7 +119,10 @@ public class BuildFragment extends BaseFragmentSaveView {
         super.onSaveInstanceState(outState);
     }
 
+    @SuppressLint("SetTextI18n")
     private void initDialogListeners(View v) {
+
+
 
         final ImageView commandTouch = v.findViewById(R.id.command_touch);
         final ImageView commandSleep = v.findViewById(R.id.command_sleep);
@@ -121,14 +130,31 @@ public class BuildFragment extends BaseFragmentSaveView {
         final ImageView commandSwipe = v.findViewById(R.id.command_swipe);
         final ImageView commandTouchHold = v.findViewById(R.id.command_touchhold);
 
+        final EditText edit11 = v.findViewById(R.id.edit_11);
+        final EditText edit12 = v.findViewById(R.id.edit_12);
+        final EditText edit21 = v.findViewById(R.id.edit_21);
+        final EditText edit22 = v.findViewById(R.id.edit_22);
+        final EditText edit23 = v.findViewById(R.id.edit_23);
+
         final TextView tvCommand = v.findViewById(R.id.parameters_and_command);
         final String params=tvCommand.getText()+"";
 
         // init
         tvCommand.setText( params + " (Single Touch)"  );
-        commandTouch.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorAccent));
+        commandTouch.setColorFilter(ContextCompat.getColor(mContext,R.color.colorAccent));
+        // show the first row of edittexts
+        edit11.setVisibility(View.VISIBLE);
+        edit12.setVisibility(View.VISIBLE);
+        // hide second row of edittexts
+        edit21.setVisibility(View.GONE);
+        edit22.setVisibility(View.GONE);
+        edit23.setVisibility(View.GONE);
+        // add the corresponding text hint
+        edit11.setHint("X: ");
+        edit12.setHint("Y: ");
 
         View.OnClickListener listener = new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 // clean up all
@@ -141,23 +167,79 @@ public class BuildFragment extends BaseFragmentSaveView {
                 switch (v.getId()) {
                     case R.id.command_touch:
                         tvCommand.setText( params + " (Single Touch)"  );
-                        commandTouch.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorAccent));
+                        commandTouch.setColorFilter(ContextCompat.getColor(mContext,R.color.colorAccent));
+                        // show the first row of edittexts
+                        edit11.setVisibility(View.VISIBLE);
+                        edit12.setVisibility(View.VISIBLE);
+                        // hide second row of edittexts
+                        edit21.setVisibility(View.GONE);
+                        edit22.setVisibility(View.GONE);
+                        edit23.setVisibility(View.GONE);
+                        // add the corresponding text hint
+                        edit11.setHint("X: ");
+                        edit12.setHint("Y: ");
                         break;
                     case R.id.command_sleep:
                         tvCommand.setText( params + " (Sleep)"  );
-                        commandSleep.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorAccent));
+                        commandSleep.setColorFilter(ContextCompat.getColor(mContext,R.color.colorAccent));
+
+                        // show the first row of edittexts
+                        edit11.setVisibility(View.VISIBLE);
+                        // hide second row of edittexts
+                        edit21.setVisibility(View.GONE);
+                        edit22.setVisibility(View.GONE);
+                        edit23.setVisibility(View.GONE);
+                        edit12.setVisibility(View.GONE);
+                        // add the corresponding text hint
+                        edit11.setHint("Duration (ms): ");
+
                         break;
                     case R.id.command_hardware:
                         tvCommand.setText( params + " (Hardware Button)"  );
-                        commandHardwareKey.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorAccent));
+                        commandHardwareKey.setColorFilter(ContextCompat.getColor(mContext,R.color.colorAccent));
+
+                        // show the first row of edittexts
+                        edit11.setVisibility(View.VISIBLE);
+                        edit12.setVisibility(View.VISIBLE);
+                        // hide second row of edittexts
+                        edit21.setVisibility(View.GONE);
+                        edit22.setVisibility(View.GONE);
+                        edit23.setVisibility(View.GONE);
+
+                        // add the corresponding text hint
+                        edit11.setHint("Button: ");
+                        edit12.setHint("Hold (ms): ");
                         break;
                     case R.id.command_swipe:
                         tvCommand.setText( params + " (Swipe)"  );
-                        commandSwipe.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorAccent));
+                        commandSwipe.setColorFilter(ContextCompat.getColor(mContext,R.color.colorAccent));
+                        // hide nothing
+                        edit21.setVisibility(View.VISIBLE);
+                        edit22.setVisibility(View.VISIBLE);
+                        edit23.setVisibility(View.VISIBLE);
+                        edit11.setVisibility(View.VISIBLE);
+                        edit12.setVisibility(View.VISIBLE);
+
+                        edit11.setHint("fromX: ");
+                        edit12.setHint("fromY: ");
+                        edit21.setHint("toX: ");
+                        edit22.setHint("toY: ");
+                        edit23.setHint("Speed (ms): ");
                         break;
                     case R.id.command_touchhold:
                         tvCommand.setText( params + " (Touch and hold)"  );
-                        commandTouchHold.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorAccent));
+                        commandTouchHold.setColorFilter(ContextCompat.getColor(mContext,R.color.colorAccent));
+
+                        //hide first row
+                        edit11.setVisibility(View.GONE);
+                        edit12.setVisibility(View.GONE);
+                        edit21.setVisibility(View.VISIBLE);
+                        edit22.setVisibility(View.VISIBLE);
+                        edit23.setVisibility(View.VISIBLE);
+
+                        edit21.setHint("X:");
+                        edit22.setHint("Y:");
+                        edit23.setHint("Hold (ms):");
                         break;
                 }
             }
