@@ -37,6 +37,9 @@ public class BuildFragment extends BaseFragmentSaveView {
 
     @BindView(R.id.command_add)
     FloatingActionButton mCommandAdd;
+    @BindView(R.id.commands_run)
+    FloatingActionButton mCommandRunner;
+
     private Context mContext;
 
     private Command curCommand;
@@ -47,7 +50,7 @@ public class BuildFragment extends BaseFragmentSaveView {
     private EditText edit22;
     private EditText edit23;
 
-    private List<Command> allCommands = new ArrayList<>();
+    private static List<Command> allCommands = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         final View root = onCreateSavedView(inflater, container, savedInstanceState, R.layout.fragment_home);
@@ -171,6 +174,19 @@ public class BuildFragment extends BaseFragmentSaveView {
             }
         });
 
+
+        mCommandRunner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("BuildFragment",allCommands.size()+"");
+                int x=0;
+                for(Command c : allCommands){
+                    Log.e("BuildFragment",c.toString() + " index:" +x);
+                    x++;
+                }
+            }
+        });
+
         return root;
     }
 
@@ -198,7 +214,7 @@ public class BuildFragment extends BaseFragmentSaveView {
         curCommand.setCommand(Command.CommandType.TOUCH);
         edit11.setInputType(InputType.TYPE_CLASS_NUMBER);
         edit12.setInputType(InputType.TYPE_CLASS_NUMBER);
-        
+
         // show the first row of edittexts
         edit11.setVisibility(View.VISIBLE);
         edit12.setVisibility(View.VISIBLE);
