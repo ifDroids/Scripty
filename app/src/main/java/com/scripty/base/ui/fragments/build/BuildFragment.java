@@ -54,7 +54,7 @@ public class BuildFragment extends BaseFragmentSaveView {
     private static List<Command> allCommands = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
-        final View root = onCreateSavedView(inflater, container, savedInstanceState, R.layout.fragment_home);
+        final View root = onCreateSavedView(inflater, container, savedInstanceState, R.layout.fragment_build);
 
         mContext = getContext();
         if (mContext == null) {

@@ -3,7 +3,6 @@ package com.scripty.base;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -38,7 +37,7 @@ public class MainActivity extends BaseActivityFragmentLoader {
         setSupportActionBar(mToolbar);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_settings, R.id.nav_help)
+                R.id.nav_build, R.id.nav_settings, R.id.nav_help)
                 .setDrawerLayout(mDrawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
