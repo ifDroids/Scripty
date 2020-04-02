@@ -26,7 +26,6 @@ import com.scripty.base.libs.BaseFragmentSaveView.wrappers.BaseFragmentSaveView;
 import com.scripty.base.models.Command;
 import com.scripty.base.ui.views.CommandLayout;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -36,7 +35,6 @@ public class BuildFragment extends BaseFragmentSaveView {
     FloatingActionButton mCommandAdd;
     private Context mContext;
 
-    private Command newCommand;
     private Command curCommand;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
@@ -66,10 +64,10 @@ public class BuildFragment extends BaseFragmentSaveView {
                     Button btnCancel = customLayout.findViewById(R.id.cancel);
 
                     // create new command object
-                    newCommand = new Command();
+                    curCommand = new Command();
                     // implement listeners
                     initDialogListeners(customLayout);
-                    newCommand.setCommand(curCommand.getCommand());
+
 
                     final AlertDialog dialog = builder.create();
                     btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +81,7 @@ public class BuildFragment extends BaseFragmentSaveView {
                         public void onClick(View v) {
                             // append the command
                             final CommandLayout command = new CommandLayout(getActivity());
-                            switch (newCommand.getCommand()){
+                            switch (curCommand.getCommand()){
                                 case TOUCH:
                                     command.migrateIcon(R.drawable.ic_command_touch);
                                     break;
@@ -100,7 +98,7 @@ public class BuildFragment extends BaseFragmentSaveView {
                                     command.migrateIcon(R.drawable.ic_command_taphold);
                                     break;
                             }
-                            command.handleTextViews(newCommand.getCommand());
+                            command.handleTextViews(curCommand.getCommand());
 
                             // click listener for delete
                             final ImageView deleteCommand = command.findViewById(R.id.delete_command);
@@ -145,7 +143,6 @@ public class BuildFragment extends BaseFragmentSaveView {
 
     @SuppressLint("SetTextI18n")
     private void initDialogListeners(View v) {
-        curCommand = new Command();
 
         final ImageView commandTouch = v.findViewById(R.id.command_touch);
         final ImageView commandSleep = v.findViewById(R.id.command_sleep);
@@ -203,7 +200,6 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit11.setHint("X: ");
                         edit12.setHint("Y: ");
 
-                        newCommand.setCommand(Command.CommandType.TOUCH);
                         curCommand.setCommand(Command.CommandType.TOUCH);
                         break;
                     case R.id.command_sleep:
@@ -220,7 +216,6 @@ public class BuildFragment extends BaseFragmentSaveView {
                         // add the corresponding text hint
                         edit11.setHint("Duration (ms): ");
 
-                        newCommand.setCommand(Command.CommandType.SLEEP);
                         curCommand.setCommand(Command.CommandType.SLEEP);
                         break;
                     case R.id.command_hardware:
@@ -239,7 +234,6 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit11.setHint("Button: ");
                         edit12.setHint("Hold (ms): ");
 
-                        newCommand.setCommand(Command.CommandType.HARDWARE_BUTTON);
                         curCommand.setCommand(Command.CommandType.HARDWARE_BUTTON);
                         break;
                     case R.id.command_swipe:
@@ -258,7 +252,6 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit22.setHint("toY: ");
                         edit23.setHint("Speed (ms): ");
 
-                        newCommand.setCommand(Command.CommandType.SWIPE);
                         curCommand.setCommand(Command.CommandType.SWIPE);
                         break;
                     case R.id.command_touchhold:
@@ -276,7 +269,6 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit22.setHint("Y:");
                         edit23.setHint("Hold (ms):");
 
-                        newCommand.setCommand(Command.CommandType.TOUCH_AND_HOLD);
                         curCommand.setCommand(Command.CommandType.TOUCH_AND_HOLD);
                         break;
                 }
