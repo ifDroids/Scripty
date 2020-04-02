@@ -11,12 +11,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.scripty.base.R;
 
 public class CommandLayout extends LinearLayout {
 
     private Activity mActivity;
+    private View mThisView;
 
     public CommandLayout(Activity act){
         super(act,null);
@@ -24,7 +26,7 @@ public class CommandLayout extends LinearLayout {
 
         @SuppressLint("InflateParams")
         View view = LayoutInflater.from(getContext()).inflate(R.layout.command_preference,null);
-
+        mThisView = view;
         // dynamically draw it
         LinearLayout container = view.findViewById(R.id.command_container);
 
@@ -42,6 +44,12 @@ public class CommandLayout extends LinearLayout {
             }
         });
         this.addView(view);
+        mThisView = view;
+    }
+
+    public void migrateIcon(int id){
+         ImageView img =  mThisView.findViewById(R.id.command_action_icon);
+         img.setImageDrawable(ContextCompat.getDrawable(mActivity,id));
     }
 
 
