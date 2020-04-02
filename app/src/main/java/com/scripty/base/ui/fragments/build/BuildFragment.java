@@ -99,6 +99,7 @@ public class BuildFragment extends BaseFragmentSaveView {
                                 case TOUCH:
                                     commandLayout.migrateIcon(R.drawable.ic_command_touch);
                                     curCommand.setParams("", Integer.parseInt(edit11.getText().toString()), Integer.parseInt(edit12.getText().toString()));
+
                                     break;
                                 case SLEEP:
                                     commandLayout.migrateIcon(R.drawable.ic_command_sleep);
@@ -210,6 +211,11 @@ public class BuildFragment extends BaseFragmentSaveView {
                 commandHardwareKey.setColorFilter(null);
                 commandSwipe.setColorFilter(null);
                 commandTouchHold.setColorFilter(null);
+                edit11.setText("");
+                edit12.setText("");
+                edit21.setText("");
+                edit22.setText("");
+                edit23.setText("");
 
                 switch (v.getId()) {
                     case R.id.command_touch:
