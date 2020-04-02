@@ -1,5 +1,15 @@
 package com.scripty.base.models;
 
+import android.app.Activity;
+import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.widget.ImageView;
+
+import androidx.core.content.ContextCompat;
+
+import com.scripty.base.R;
+import com.scripty.base.ui.views.CommandLayout;
+
 public class Command {
 
     private CommandType mID;
@@ -11,6 +21,8 @@ public class Command {
     private int mDuration;
     private int mSpeed;
     private String mHwBtn; // thats temp
+
+    private CommandLayout mThisView;
 
     public enum CommandType {
         TOUCH,
@@ -30,4 +42,16 @@ public class Command {
     public CommandType getCommand(){
         return this.mID;
     }
+
+    // layout
+    public void setLayout(CommandLayout v){
+        mThisView = v;
+    }
+
+    public CommandLayout getLayout(){
+        return mThisView;
+    }
+
+
+
 }
