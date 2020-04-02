@@ -91,11 +91,11 @@ public class CommandLayout extends LinearLayout {
                 mThisView.findViewById(R.id.tv3).setVisibility(View.VISIBLE);
                 mThisView.findViewById(R.id.tv4).setVisibility(View.VISIBLE);
                 mThisView.findViewById(R.id.tv5).setVisibility(View.VISIBLE);
-                ( (TextView) mThisView.findViewById(R.id.tv1)).setText("fromX: "+command.getFromX());
-                ( (TextView) mThisView.findViewById(R.id.tv2)).setText("fromY: "+command.getFromY() );
-                ( (TextView) mThisView.findViewById(R.id.tv3)).setText("toX: "+command.getX());
-                ( (TextView) mThisView.findViewById(R.id.tv4)).setText("toY: "+command.getY());
-                ( (TextView) mThisView.findViewById(R.id.tv5)).setText("Speed: "+command.getSpeed()+ " ms");
+                ( (TextView) mThisView.findViewById(R.id.tv1)).setText("fromX:\n"+command.getFromX());
+                ( (TextView) mThisView.findViewById(R.id.tv2)).setText("fromY:\n"+command.getFromY() );
+                ( (TextView) mThisView.findViewById(R.id.tv3)).setText("toX:\n"+command.getX());
+                ( (TextView) mThisView.findViewById(R.id.tv4)).setText("toY:\n"+command.getY());
+                ( (TextView) mThisView.findViewById(R.id.tv5)).setText("Speed:\n"+command.getSpeed()+ " ms");
                 break;
             case TOUCH_AND_HOLD:
                 mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
