@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -105,19 +106,39 @@ public class BuildFragment extends BaseFragmentSaveView {
                             final CommandLayout commandLayout = new CommandLayout(getActivity());
                             switch (curCommand.getCommand()) {
                                 case TOUCH:
+                                    if (edit11.getText().length() == 0 || edit12.getText().length() == 0 ){
+                                        Toast.makeText(mContext,"Input fields cant be empty.",Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
+
                                     commandLayout.migrateIcon(R.drawable.ic_command_touch);
                                     curCommand.setParams("", Integer.parseInt(edit11.getText().toString()), Integer.parseInt(edit12.getText().toString()));
 
                                     break;
                                 case SLEEP:
+                                    if (edit11.getText().length() == 0  ){
+                                        Toast.makeText(mContext,"Input fields cant be empty.",Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
+
                                     commandLayout.migrateIcon(R.drawable.ic_command_sleep);
                                     curCommand.setParams("", Integer.parseInt(edit11.getText().toString()));
                                     break;
                                 case HARDWARE_BUTTON:
+                                    if (edit12.getText().length() == 0  ){
+                                        Toast.makeText(mContext,"Input fields cant be empty.",Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
+
                                     commandLayout.migrateIcon(R.drawable.ic_command_hwkey);
                                     curCommand.setParams(edit11.getText().toString(), Integer.parseInt(edit12.getText().toString()));
                                     break;
                                 case SWIPE:
+                                    if (edit11.getText().length() == 0  || edit12.getText().length() == 0 || edit21.getText().length() == 0 || edit22.getText().length() == 0 || edit23.getText().length() == 0){
+                                        Toast.makeText(mContext,"Input fields cant be empty.",Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
+
                                     commandLayout.migrateIcon(R.drawable.ic_command_swipe);
                                     curCommand.setParams("",
                                             Integer.parseInt(edit11.getText().toString()),
@@ -127,6 +148,11 @@ public class BuildFragment extends BaseFragmentSaveView {
                                             Integer.parseInt(edit23.getText().toString()));
                                     break;
                                 case TOUCH_AND_HOLD:
+                                    if (  edit21.getText().length() == 0 || edit22.getText().length() == 0 || edit23.getText().length() == 0){
+                                        Toast.makeText(mContext,"Input fields cant be empty.",Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
+
                                     commandLayout.migrateIcon(R.drawable.ic_command_taphold);
                                     curCommand.setParams("",
                                             Integer.parseInt(edit21.getText().toString()),
