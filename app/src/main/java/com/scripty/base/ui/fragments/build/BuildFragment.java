@@ -79,38 +79,39 @@ public class BuildFragment extends BaseFragmentSaveView {
                     btnAdd.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // append the command
-                            final CommandLayout command = new CommandLayout(getActivity());
+                            // append the commandLayout
+                            final CommandLayout commandLayout = new CommandLayout(getActivity());
                             switch (curCommand.getCommand()){
                                 case TOUCH:
-                                    command.migrateIcon(R.drawable.ic_command_touch);
+                                    commandLayout.migrateIcon(R.drawable.ic_command_touch);
                                     break;
                                 case SLEEP:
-                                    command.migrateIcon(R.drawable.ic_command_sleep);
+                                    commandLayout.migrateIcon(R.drawable.ic_command_sleep);
                                     break;
                                 case HARDWARE_BUTTON:
-                                    command.migrateIcon(R.drawable.ic_command_hwkey);
+                                    commandLayout.migrateIcon(R.drawable.ic_command_hwkey);
                                     break;
                                 case SWIPE:
-                                    command.migrateIcon(R.drawable.ic_command_swipe);
+                                    commandLayout.migrateIcon(R.drawable.ic_command_swipe);
                                     break;
                                 case TOUCH_AND_HOLD:
-                                    command.migrateIcon(R.drawable.ic_command_taphold);
+                                    commandLayout.migrateIcon(R.drawable.ic_command_taphold);
                                     break;
                             }
-                            command.handleTextViews(curCommand.getCommand());
+                            curCommand.setLayout(commandLayout);
+                            commandLayout.handleTextViews(curCommand.getCommand());
 
                             // click listener for delete
-                            final ImageView deleteCommand = command.findViewById(R.id.delete_command);
+                            final ImageView deleteCommand = commandLayout.findViewById(R.id.delete_command);
                             deleteCommand.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    commandsContainer.removeView(command);
+                                    commandsContainer.removeView(commandLayout);
                                 }
                             });
 
-                            commandsContainer.removeView(command);
-                            commandsContainer.addView(command);
+                            commandsContainer.removeView(commandLayout);
+                            commandsContainer.addView(commandLayout);
 
                             saveCurrentViewState(root);
 
