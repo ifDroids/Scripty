@@ -124,7 +124,9 @@ public class BuildFragment extends BaseFragmentSaveView {
         final TextView tvCommand = v.findViewById(R.id.parameters_and_command);
         final String params=tvCommand.getText()+"";
 
-
+        // init
+        tvCommand.setText( params + " (Single Touch)"  );
+        commandTouch.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorAccent));
 
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
