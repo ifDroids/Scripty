@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,8 +77,7 @@ public class BuildFragment extends BaseFragmentSaveView {
 
                     // create new command object
                     curCommand = new Command();
-                    // its the initial
-                    curCommand.setCommand(Command.CommandType.TOUCH);
+
 
                     // implement listeners
                     edit11 = customLayout.findViewById(R.id.edit_11);
@@ -195,6 +195,10 @@ public class BuildFragment extends BaseFragmentSaveView {
         // init
         tvCommand.setText(params + " (Single Touch)");
         commandTouch.setColorFilter(ContextCompat.getColor(mContext, R.color.colorAccent));
+        curCommand.setCommand(Command.CommandType.TOUCH);
+        edit11.setInputType(InputType.TYPE_CLASS_NUMBER);
+        edit12.setInputType(InputType.TYPE_CLASS_NUMBER);
+        
         // show the first row of edittexts
         edit11.setVisibility(View.VISIBLE);
         edit12.setVisibility(View.VISIBLE);
@@ -237,6 +241,9 @@ public class BuildFragment extends BaseFragmentSaveView {
                         // add the corresponding text hint
                         edit11.setHint("X: ");
                         edit12.setHint("Y: ");
+                        // update inputtype
+                        edit11.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        edit12.setInputType(InputType.TYPE_CLASS_NUMBER);
 
                         curCommand.setCommand(Command.CommandType.TOUCH);
                          break;
@@ -253,6 +260,7 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit12.setVisibility(View.GONE);
                         // add the corresponding text hint
                         edit11.setHint("Duration (ms): ");
+                        edit11.setInputType(InputType.TYPE_CLASS_NUMBER);
 
                         curCommand.setCommand(Command.CommandType.SLEEP);
 
@@ -272,6 +280,9 @@ public class BuildFragment extends BaseFragmentSaveView {
                         // add the corresponding text hint
                         edit11.setHint("Button: ");
                         edit12.setHint("Hold (ms): ");
+                        edit11.setInputType(InputType.TYPE_CLASS_TEXT);
+                        edit12.setInputType(InputType.TYPE_CLASS_NUMBER);
+
 
                         curCommand.setCommand(Command.CommandType.HARDWARE_BUTTON);
 
@@ -291,6 +302,11 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit21.setHint("toX: ");
                         edit22.setHint("toY: ");
                         edit23.setHint("Speed (ms): ");
+                        edit11.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        edit12.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        edit21.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        edit22.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        edit23.setInputType(InputType.TYPE_CLASS_NUMBER);
 
                         curCommand.setCommand(Command.CommandType.SWIPE);
 
@@ -309,6 +325,9 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit21.setHint("X:");
                         edit22.setHint("Y:");
                         edit23.setHint("Hold (ms):");
+                        edit21.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        edit22.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        edit23.setInputType(InputType.TYPE_CLASS_NUMBER);
 
                         curCommand.setCommand(Command.CommandType.TOUCH_AND_HOLD);
 
