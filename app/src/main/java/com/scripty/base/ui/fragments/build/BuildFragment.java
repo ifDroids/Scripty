@@ -110,6 +110,10 @@ public class BuildFragment extends BaseFragmentSaveView {
                                         Toast.makeText(mContext,"Input fields cant be empty.",Toast.LENGTH_LONG).show();
                                         return;
                                     }
+                                    if (edit11.getText().length() > 4 || edit12.getText().length() > 4 ){ // pixel coords cant be higher than 4 digits
+                                        Toast.makeText(mContext,"Dimension coordinates cant be 5-digit numbers",Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
 
                                     commandLayout.migrateIcon(R.drawable.ic_command_touch);
                                     curCommand.setParams("", Integer.parseInt(edit11.getText().toString()), Integer.parseInt(edit12.getText().toString()));
@@ -138,6 +142,10 @@ public class BuildFragment extends BaseFragmentSaveView {
                                         Toast.makeText(mContext,"Input fields cant be empty.",Toast.LENGTH_LONG).show();
                                         return;
                                     }
+                                    if (edit11.getText().length()  > 4  || edit12.getText().length()  > 4 || edit21.getText().length()  > 4 || edit22.getText().length()  > 4 ){
+                                        Toast.makeText(mContext,"Dimension coordinates cant be 5-digit numbers",Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
 
                                     commandLayout.migrateIcon(R.drawable.ic_command_swipe);
                                     curCommand.setParams("",
@@ -150,6 +158,10 @@ public class BuildFragment extends BaseFragmentSaveView {
                                 case TOUCH_AND_HOLD:
                                     if (  edit21.getText().length() == 0 || edit22.getText().length() == 0 || edit23.getText().length() == 0){
                                         Toast.makeText(mContext,"Input fields cant be empty.",Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
+                                    if (  edit21.getText().length() > 4 || edit22.getText().length() > 4 ){
+                                        Toast.makeText(mContext,"Dimension coordinates cant be 5-digit numbers",Toast.LENGTH_LONG).show();
                                         return;
                                     }
 
