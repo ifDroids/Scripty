@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.scripty.base.ui.fragments.settings.SettingsFragment"
+        android:name="com.ifdroids.scripty.ui.fragments.settings.SettingsFragment"
         android:label="@string/menu_build"
         tools:layout="@layout/fragment_build">
     </fragment>

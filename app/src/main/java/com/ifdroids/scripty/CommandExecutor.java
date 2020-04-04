@@ -1,4 +1,4 @@
-package com.scripty.base;
+package com.ifdroids.scripty;
 
 import android.app.Notification;
 import android.app.NotificationChannel;

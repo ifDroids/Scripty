@@ -7,20 +7,20 @@
 
     <fragment
         android:id="@+id/nav_build"
-        android:name="com.scripty.base.ui.fragments.build.BuildFragment"
+        android:name="com.ifdroids.scripty.ui.fragments.build.BuildFragment"
         android:label="@string/menu_build"
         tools:layout="@layout/fragment_build">
     </fragment>
 
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.scripty.base.ui.fragments.settings.SettingsFragment"
+        android:name="com.ifdroids.scripty.ui.fragments.settings.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/nav_help"
-        android:name="com.scripty.base.ui.fragments.help.HelpFragment"
+        android:name="com.ifdroids.scripty.ui.fragments.help.HelpFragment"
         android:label="@string/menu_help"
         tools:layout="@layout/fragment_help" />
 </navigation>

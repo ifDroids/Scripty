@@ -1,4 +1,4 @@
-package com.scripty.base.libs.BaseFragmentSaveView.interfaces;
+package com.ifdroids.scripty.libs.BaseFragmentSaveView.interfaces;
 
 import android.view.View;
 

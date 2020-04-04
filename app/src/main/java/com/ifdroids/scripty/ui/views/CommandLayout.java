@@ -1,10 +1,9 @@
-package com.scripty.base.ui.views;
+package com.ifdroids.scripty.ui.views;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import com.scripty.base.R;
-import com.scripty.base.models.Command;
+import com.ifdroids.scripty.R;
+import com.ifdroids.scripty.models.Command;
 
 public class CommandLayout extends LinearLayout {
 

@@ -1,4 +1,4 @@
-package com.scripty.base.libs.BaseFragmentSaveView.wrappers;
+package com.ifdroids.scripty.libs.BaseFragmentSaveView.wrappers;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,11 +7,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.scripty.base.libs.BaseFragmentSaveView.interfaces.OnFragmentViewLoadListener;
-import com.scripty.base.libs.BaseFragmentSaveView.interfaces.OnFragmentViewSaveListener;
+import com.ifdroids.scripty.libs.BaseFragmentSaveView.interfaces.OnFragmentViewLoadListener;
+import com.ifdroids.scripty.libs.BaseFragmentSaveView.interfaces.OnFragmentViewSaveListener;
 
 
 public class BaseFragmentSaveView extends Fragment {

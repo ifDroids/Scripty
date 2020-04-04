@@ -1,4 +1,4 @@
-package com.scripty.base.ui.fragments.build;
+package com.ifdroids.scripty.ui.fragments.build;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Display;
@@ -27,13 +26,12 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.scripty.base.CommandExecutor;
-import com.scripty.base.R;
-import com.scripty.base.libs.BaseFragmentSaveView.wrappers.BaseFragmentSaveView;
-import com.scripty.base.models.Command;
-import com.scripty.base.ui.views.CommandLayout;
+import com.ifdroids.scripty.CommandExecutor;
+import com.ifdroids.scripty.R;
+import com.ifdroids.scripty.libs.BaseFragmentSaveView.wrappers.BaseFragmentSaveView;
+import com.ifdroids.scripty.models.Command;
+import com.ifdroids.scripty.ui.views.CommandLayout;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

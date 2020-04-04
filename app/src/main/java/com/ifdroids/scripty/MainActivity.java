@@ -1,4 +1,4 @@
-package com.scripty.base;
+package com.ifdroids.scripty;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
-import com.scripty.base.libs.BaseFragmentSaveView.wrappers.BaseActivityFragmentLoader;
+import com.ifdroids.scripty.libs.BaseFragmentSaveView.wrappers.BaseActivityFragmentLoader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -1,10 +1,10 @@
-package com.scripty.base.models;
+package com.ifdroids.scripty.models;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.scripty.base.ui.views.CommandLayout;
+import com.ifdroids.scripty.ui.views.CommandLayout;
 
 import java.io.Serializable;
 

@@ -1,7 +1,6 @@
-package com.scripty.base;
+package com.ifdroids.scripty;
 
 import android.accessibilityservice.AccessibilityService;
-import android.accessibilityservice.AccessibilityServiceInfo;
 import android.accessibilityservice.GestureDescription;
 import android.graphics.Path;
 import android.os.Build;

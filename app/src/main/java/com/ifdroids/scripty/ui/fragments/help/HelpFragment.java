@@ -1,4 +1,4 @@
-package com.scripty.base.ui.fragments.settings;
+package com.ifdroids.scripty.ui.fragments.help;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,11 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.scripty.base.R;
+import com.ifdroids.scripty.R;
 
-public class SettingsFragment extends Fragment {
+public class HelpFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        return inflater.inflate(R.layout.fragment_help, container, false);
     }
 }
