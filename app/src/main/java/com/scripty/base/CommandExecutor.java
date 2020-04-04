@@ -9,15 +9,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class CommandExecutor extends Service {
 
@@ -25,7 +24,9 @@ public class CommandExecutor extends Service {
     private static final String TAG = "CommandExecutor";
     private static final String CHANNEL_ID = "CommandExecutor";
 
-    private Context ego;
+    private Context mContext;
+    private Intent mSelf;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -36,7 +37,8 @@ public class CommandExecutor extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e(TAG, "Into the service.");
-        ego=this;
+        mContext =this;
+        mSelf =intent;
 
         createNotificationChannel();
         Intent notificationIntent = new Intent(this, MainActivity.class);
@@ -74,26 +76,24 @@ public class CommandExecutor extends Service {
     Timer timer;
 
     private void callAsynchronousTask() {
-        Log.e(TAG, "Running callAsynchronousTask()...");
-        timer = new Timer();
-        TimerTask doAsynchronousTask = new TimerTask() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
+        Log.e(TAG, "Running callAsynchronousTask() in 2 seconds...");
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 AccessibilityClickerService.instance.sendFuckingClick(400,600);
+                AccessibilityClickerService.instance.stop();
+                mContext.stopService(mSelf);
             }
+        }, 2000);
 
-        };
 
-        Log.e(TAG, "Going to call asynctask...");
-        timer.schedule(doAsynchronousTask, 2000, 100000);
     }
 
 
     @Override
     public void onDestroy() {
         Log.e(TAG, "Service got killed...");
-        timer.cancel();
         super.onDestroy();
     }
 

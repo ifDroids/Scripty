@@ -24,6 +24,10 @@ public class AccessibilityClickerService extends AccessibilityService {
         dispatchGesture(createClick(400, 600), callback, null);
     }
 
+    public void stop(){
+        this.stopSelf();
+    }
+
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
     }
@@ -31,9 +35,13 @@ public class AccessibilityClickerService extends AccessibilityService {
 
     @Override
     public void onInterrupt() {
-
     }
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static GestureDescription createClick(float x, float y) {
