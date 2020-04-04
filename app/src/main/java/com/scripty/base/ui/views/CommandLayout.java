@@ -74,11 +74,12 @@ public class CommandLayout extends LinearLayout {
         // 1.6f is the default weight as declared at the layout.xml
         LayoutParams paramsTV = new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1.6f );
 
-        // reset weights
+        // reset weights,gravity and visibility
         for (int i=0;i<mContainer.getChildCount(); i++ ){
             if (mContainer.getChildAt(i) instanceof TextView){
                 mContainer.getChildAt(i).setLayoutParams(paramsTV);
                 ((TextView) mContainer.getChildAt(i)).setGravity(Gravity.CENTER);
+                mContainer.getChildAt(i).setVisibility(View.GONE);
             }
         }
 
@@ -86,9 +87,6 @@ public class CommandLayout extends LinearLayout {
             case TOUCH:
                 tv1.setVisibility(View.VISIBLE);
                 tv2.setVisibility(View.VISIBLE);
-                tv3.setVisibility(View.GONE);
-                tv4.setVisibility(View.GONE);
-                tv5.setVisibility(View.GONE);
                 tv1.setText("X: "+mCommand.getX());
                 tv2.setText("Y: "+mCommand.getY());
                 img.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_command_touch));
@@ -102,9 +100,6 @@ public class CommandLayout extends LinearLayout {
             case HARDWARE_BUTTON:
                 tv1.setVisibility(View.VISIBLE);
                 tv2.setVisibility(View.VISIBLE);
-                tv3.setVisibility(View.GONE);
-                tv4.setVisibility(View.GONE);
-                tv5.setVisibility(View.GONE);
                 tv1.setText("Button: "+mCommand.getHwButton());
                 tv2.setText("Duration: "+mCommand.getDuration()+ " ms");
                 img.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_command_hwkey));
@@ -117,10 +112,6 @@ public class CommandLayout extends LinearLayout {
                 break;
             case SLEEP:
                 tv1.setVisibility(View.VISIBLE);
-                tv2.setVisibility(View.GONE);
-                tv3.setVisibility(View.GONE);
-                tv4.setVisibility(View.GONE);
-                tv5.setVisibility(View.GONE);
                 tv1.setText("Duration: "+mCommand.getDuration() + " ms");
                 img.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_command_sleep));
 
@@ -155,8 +146,6 @@ public class CommandLayout extends LinearLayout {
                 tv1.setVisibility(View.VISIBLE);
                 tv2.setVisibility(View.VISIBLE);
                 tv3.setVisibility(View.VISIBLE);
-                tv4.setVisibility(View.GONE);
-                tv5.setVisibility(View.GONE);
                 tv1.setText("X: "+mCommand.getX());
                 tv2.setText("Y: "+mCommand.getY() );
                 tv3.setText("Duration: "+mCommand.getX()+ " ms");
