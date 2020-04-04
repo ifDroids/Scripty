@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -228,35 +229,38 @@ public class BuildFragment extends BaseFragmentSaveView {
     }
 
     @SuppressLint("SetTextI18n")
-    private void initDialogListeners(View v) {
+    private void initDialogListeners(final View dialogView) {
 
-        final ImageView commandTouch = v.findViewById(R.id.command_touch);
-        final ImageView commandSleep = v.findViewById(R.id.command_sleep);
-        final ImageView commandHardwareKey = v.findViewById(R.id.command_hardware);
-        final ImageView commandSwipe = v.findViewById(R.id.command_swipe);
-        final ImageView commandTouchHold = v.findViewById(R.id.command_touchhold);
+        final ImageView commandTouch = dialogView.findViewById(R.id.command_touch);
+        final ImageView commandSleep = dialogView.findViewById(R.id.command_sleep);
+        final ImageView commandHardwareKey = dialogView.findViewById(R.id.command_hardware);
+        final ImageView commandSwipe = dialogView.findViewById(R.id.command_swipe);
+        final ImageView commandTouchHold = dialogView.findViewById(R.id.command_touchhold);
 
 
-        final TextView tvCommand = v.findViewById(R.id.parameters_and_command);
+
+        final TextView tvCommand = dialogView.findViewById(R.id.parameters_and_command);
         final String params = tvCommand.getText() + "";
 
         // init
-        tvCommand.setText(params + " (Single Touch)");
-        commandTouch.setColorFilter(ContextCompat.getColor(mContext, R.color.colorAccent));
-        curCommand.setCommand(Command.CommandType.TOUCH);
-        edit11.setInputType(InputType.TYPE_CLASS_NUMBER);
-        edit12.setInputType(InputType.TYPE_CLASS_NUMBER);
+        {
+            tvCommand.setText(params + " (Single Touch)");
+            commandTouch.setColorFilter(ContextCompat.getColor(mContext, R.color.colorAccent));
+            curCommand.setCommand(Command.CommandType.TOUCH);
+            edit11.setInputType(InputType.TYPE_CLASS_NUMBER);
+            edit12.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-        // show the first row of edittexts
-        edit11.setVisibility(View.VISIBLE);
-        edit12.setVisibility(View.VISIBLE);
-        // hide second row of edittexts
-        edit21.setVisibility(View.GONE);
-        edit22.setVisibility(View.GONE);
-        edit23.setVisibility(View.GONE);
-        // add the corresponding text hint
-        edit11.setHint("X: ");
-        edit12.setHint("Y: ");
+            // show the first row of edittexts
+            edit11.setVisibility(View.VISIBLE);
+            edit12.setVisibility(View.VISIBLE);
+            // hide second row of edittexts
+            edit21.setVisibility(View.GONE);
+            edit22.setVisibility(View.GONE);
+            edit23.setVisibility(View.GONE);
+            // add the corresponding text hint
+            edit11.setHint("X: ");
+            edit12.setHint("Y: ");
+        }
 
         View.OnClickListener listener = new View.OnClickListener() {
 
@@ -264,16 +268,8 @@ public class BuildFragment extends BaseFragmentSaveView {
             public void onClick(View v) {
 
                 // clean up all
-                commandTouch.setColorFilter(null);
-                commandSleep.setColorFilter(null);
-                commandHardwareKey.setColorFilter(null);
-                commandSwipe.setColorFilter(null);
-                commandTouchHold.setColorFilter(null);
-                edit11.setText("");
-                edit12.setText("");
-                edit21.setText("");
-                edit22.setText("");
-                edit23.setText("");
+                // reset weights,gravity and visibility
+                initDialog(dialogView);
 
                 // enable the first tv (doesnt work on last case: . we do it there programmatically)
                 edit11.requestFocus();
@@ -285,10 +281,6 @@ public class BuildFragment extends BaseFragmentSaveView {
                         // show the first row of edittexts
                         edit11.setVisibility(View.VISIBLE);
                         edit12.setVisibility(View.VISIBLE);
-                        // hide second row of edittexts
-                        edit21.setVisibility(View.GONE);
-                        edit22.setVisibility(View.GONE);
-                        edit23.setVisibility(View.GONE);
                         // add the corresponding text hint
                         edit11.setHint("X: ");
                         edit12.setHint("Y: ");
@@ -302,19 +294,12 @@ public class BuildFragment extends BaseFragmentSaveView {
                         tvCommand.setText(params + " (Sleep)");
                         commandSleep.setColorFilter(ContextCompat.getColor(mContext, R.color.colorAccent));
 
-                        // show the first row of edittexts
                         edit11.setVisibility(View.VISIBLE);
-                        // hide second row of edittexts
-                        edit21.setVisibility(View.GONE);
-                        edit22.setVisibility(View.GONE);
-                        edit23.setVisibility(View.GONE);
-                        edit12.setVisibility(View.GONE);
                         // add the corresponding text hint
-                        edit11.setHint("Duration (ms): ");
+                        edit11.setHint("Duration (ms):");
                         edit11.setInputType(InputType.TYPE_CLASS_NUMBER);
 
                         curCommand.setCommand(Command.CommandType.SLEEP);
-
                         break;
                     case R.id.command_hardware:
                         tvCommand.setText(params + " (Hardware Button)");
@@ -323,20 +308,14 @@ public class BuildFragment extends BaseFragmentSaveView {
                         // show the first row of edittexts
                         edit11.setVisibility(View.VISIBLE);
                         edit12.setVisibility(View.VISIBLE);
-                        // hide second row of edittexts
-                        edit21.setVisibility(View.GONE);
-                        edit22.setVisibility(View.GONE);
-                        edit23.setVisibility(View.GONE);
 
                         // add the corresponding text hint
-                        edit11.setHint("Button: ");
-                        edit12.setHint("Hold (ms): ");
+                        edit11.setHint("Button:");
+                        edit12.setHint("Hold (ms):");
                         edit11.setInputType(InputType.TYPE_CLASS_TEXT);
                         edit12.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-
                         curCommand.setCommand(Command.CommandType.HARDWARE_BUTTON);
-
                         break;
                     case R.id.command_swipe:
                         tvCommand.setText(params + " (Swipe)");
@@ -348,11 +327,11 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit11.setVisibility(View.VISIBLE);
                         edit12.setVisibility(View.VISIBLE);
 
-                        edit11.setHint("fromX: ");
-                        edit12.setHint("fromY: ");
-                        edit21.setHint("toX: ");
-                        edit22.setHint("toY: ");
-                        edit23.setHint("Speed (ms): ");
+                        edit11.setHint("fromX:");
+                        edit12.setHint("fromY:");
+                        edit21.setHint("toX:");
+                        edit22.setHint("toY:");
+                        edit23.setHint("Speed (ms):");
                         edit11.setInputType(InputType.TYPE_CLASS_NUMBER);
                         edit12.setInputType(InputType.TYPE_CLASS_NUMBER);
                         edit21.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -360,15 +339,11 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit23.setInputType(InputType.TYPE_CLASS_NUMBER);
 
                         curCommand.setCommand(Command.CommandType.SWIPE);
-
                         break;
                     case R.id.command_touchhold:
                         tvCommand.setText(params + " (Touch and hold)");
                         commandTouchHold.setColorFilter(ContextCompat.getColor(mContext, R.color.colorAccent));
 
-                        //hide first row
-                        edit11.setVisibility(View.GONE);
-                        edit12.setVisibility(View.GONE);
                         edit21.setVisibility(View.VISIBLE);
                         edit22.setVisibility(View.VISIBLE);
                         edit23.setVisibility(View.VISIBLE);
@@ -379,6 +354,7 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit21.setInputType(InputType.TYPE_CLASS_NUMBER);
                         edit22.setInputType(InputType.TYPE_CLASS_NUMBER);
                         edit23.setInputType(InputType.TYPE_CLASS_NUMBER);
+
                         curCommand.setCommand(Command.CommandType.TOUCH_AND_HOLD);
 
                         // enable the first tv
@@ -394,6 +370,27 @@ public class BuildFragment extends BaseFragmentSaveView {
         commandSwipe.setOnClickListener(listener);
         commandTouchHold.setOnClickListener(listener);
 
+    }
+
+    private void initDialog(View v){
+        final LinearLayout commandsIconsContainer = v.findViewById(R.id.commands_icons_container);
+        final LinearLayout paramsFirst = v.findViewById(R.id.params_first_line);
+        final LinearLayout paramsSecond = v.findViewById(R.id.params_second_line);
+
+        for (int i=0;i<commandsIconsContainer.getChildCount(); i++ )
+            if (commandsIconsContainer.getChildAt(i) instanceof ImageView)
+                ((ImageView)commandsIconsContainer.getChildAt(i)).setColorFilter(null);
+
+        for(int i=0;i<paramsFirst.getChildCount();i++)
+            if (paramsFirst.getChildAt(i) instanceof EditText) {
+                ((EditText) paramsFirst.getChildAt(i)).setText("");
+                paramsFirst.getChildAt(i).setVisibility(View.GONE);
+            }
+        for(int i=0;i<paramsSecond.getChildCount();i++)
+            if (paramsSecond.getChildAt(i) instanceof EditText) {
+                ((EditText) paramsSecond.getChildAt(i)).setText("");
+                paramsSecond.getChildAt(i).setVisibility(View.GONE);
+            }
     }
 }
 

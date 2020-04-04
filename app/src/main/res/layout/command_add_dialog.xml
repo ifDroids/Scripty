@@ -16,6 +16,7 @@
 
     <!--commands-->
     <LinearLayout
+        android:id="@+id/commands_icons_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -73,6 +74,7 @@
 
     <!--params touch-->
     <LinearLayout
+        android:id="@+id/params_first_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -95,6 +97,7 @@
 
     <!--params sleep-->
     <LinearLayout
+        android:id="@+id/params_second_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
