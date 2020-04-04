@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Display;
@@ -25,11 +27,13 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.scripty.base.CommandExecutor;
 import com.scripty.base.R;
 import com.scripty.base.libs.BaseFragmentSaveView.wrappers.BaseFragmentSaveView;
 import com.scripty.base.models.Command;
 import com.scripty.base.ui.views.CommandLayout;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -218,17 +222,26 @@ public class BuildFragment extends BaseFragmentSaveView {
         mCommandRunner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("BuildFragment", allCommands.size() + "");
-                int x = 0;
-                for (Command c : allCommands) {
-                    Log.e("BuildFragment", c.toString() + " index:" + x);
-                    x++;
-                }
+
+
+                //send this app to background
+                Intent i = new Intent();
+                i.setAction(Intent.ACTION_MAIN);
+                i.addCategory(Intent.CATEGORY_HOME);
+                mContext.startActivity(i);
+
+                Log.e("BuildFragment","Commands size :"+allCommands.size()+"");
+                Intent serviceIntent = new Intent(mContext, CommandExecutor.class);
+                serviceIntent.putExtra("commandsList", (Serializable) allCommands);
+                ContextCompat.startForegroundService(mContext, serviceIntent);
+
             }
         });
 
         return root;
     }
+
+
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {

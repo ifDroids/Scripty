@@ -6,7 +6,9 @@ import androidx.annotation.NonNull;
 
 import com.scripty.base.ui.views.CommandLayout;
 
-public class Command {
+import java.io.Serializable;
+
+public class Command implements Serializable {
 
     private CommandType mCommand;
 
