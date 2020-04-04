@@ -1,20 +1,14 @@
 package com.scripty.base.models;
 
-import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 
-import com.scripty.base.R;
 import com.scripty.base.ui.views.CommandLayout;
 
 public class Command {
 
-    private CommandType mID;
+    private CommandType mCommand;
 
     private int mX = -1;
     private int mY = -1;
@@ -39,11 +33,11 @@ public class Command {
 
     // getters setters
     public void setCommand(CommandType id) {
-        mID = id;
+        mCommand = id;
     }
 
     public CommandType getCommand() {
-        return this.mID;
+        return this.mCommand;
     }
 
     // layout
@@ -69,8 +63,8 @@ public class Command {
         // truly update
         mHwBtn = hw;
 
-        Log.e("dsds",mID.toString());
-        switch (mID) {
+        Log.e("dsds", mCommand.toString());
+        switch (mCommand) {
             case SLEEP:
                 mDuration = args[0];
                 break;
