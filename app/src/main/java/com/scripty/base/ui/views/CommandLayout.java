@@ -49,15 +49,16 @@ public class CommandLayout extends LinearLayout {
         });
         this.addView(view);
         mThisView = view;
+
+        save();
     }
 
-    public void migrateIcon(int id){
-         ImageView img =  mThisView.findViewById(R.id.command_action_icon);
-         img.setImageDrawable(ContextCompat.getDrawable(mActivity,id));
-    }
+
 
     @SuppressLint("SetTextI18n")
-    public void save(){
+    private void save(){
+        ImageView img =  mThisView.findViewById(R.id.command_action_icon);
+
         switch (mCommand.getCommand()){
             case TOUCH:
                 mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
@@ -67,7 +68,7 @@ public class CommandLayout extends LinearLayout {
                 mThisView.findViewById(R.id.tv5).setVisibility(View.INVISIBLE);
                 ( (TextView) mThisView.findViewById(R.id.tv1)).setText("X: "+mCommand.getX());
                 ( (TextView) mThisView.findViewById(R.id.tv2)).setText("Y: "+mCommand.getY());
-
+                img.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_command_touch));
                 break;
             case HARDWARE_BUTTON:
                 mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
@@ -78,6 +79,7 @@ public class CommandLayout extends LinearLayout {
 
                 ( (TextView) mThisView.findViewById(R.id.tv1)).setText("Button: "+mCommand.getHwButton());
                 ( (TextView) mThisView.findViewById(R.id.tv2)).setText("Duration: "+mCommand.getDuration()+ " ms");
+                img.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_command_hwkey));
                 break;
             case SLEEP:
                 mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
@@ -86,6 +88,7 @@ public class CommandLayout extends LinearLayout {
                 mThisView.findViewById(R.id.tv4).setVisibility(View.INVISIBLE);
                 mThisView.findViewById(R.id.tv5).setVisibility(View.INVISIBLE);
                 ( (TextView) mThisView.findViewById(R.id.tv1)).setText("Duration: "+mCommand.getDuration() + " ms");
+                img.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_command_sleep));
                 break;
             case SWIPE:
                 mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
@@ -98,6 +101,7 @@ public class CommandLayout extends LinearLayout {
                 ( (TextView) mThisView.findViewById(R.id.tv3)).setText("toX:\n"+mCommand.getX());
                 ( (TextView) mThisView.findViewById(R.id.tv4)).setText("toY:\n"+mCommand.getY());
                 ( (TextView) mThisView.findViewById(R.id.tv5)).setText("Speed:\n"+mCommand.getSpeed()+ " ms");
+                img.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_command_swipe));
                 break;
             case TOUCH_AND_HOLD:
                 mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
@@ -108,6 +112,7 @@ public class CommandLayout extends LinearLayout {
                 ( (TextView) mThisView.findViewById(R.id.tv1)).setText("X: "+mCommand.getX());
                 ( (TextView) mThisView.findViewById(R.id.tv2)).setText("Y: "+mCommand.getY() );
                 ( (TextView) mThisView.findViewById(R.id.tv3)).setText("Duration: "+mCommand.getX()+ " ms");
+                img.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_command_taphold));
                 break;
         }
     }

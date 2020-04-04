@@ -101,8 +101,7 @@ public class BuildFragment extends BaseFragmentSaveView {
                     btnAdd.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // append the commandLayout
-                            final CommandLayout commandLayout = new CommandLayout(getActivity(),curCommand);
+
                             switch (curCommand.getCommand()) {
                                 case TOUCH:
                                     if (edit11.getText().length() == 0 || edit12.getText().length() == 0 ){
@@ -114,9 +113,7 @@ public class BuildFragment extends BaseFragmentSaveView {
                                         return;
                                     }
 
-                                    commandLayout.migrateIcon(R.drawable.ic_command_touch);
                                     curCommand.setParams("", Integer.parseInt(edit11.getText().toString()), Integer.parseInt(edit12.getText().toString()));
-
                                     break;
                                 case SLEEP:
                                     if (edit11.getText().length() == 0  ){
@@ -124,7 +121,6 @@ public class BuildFragment extends BaseFragmentSaveView {
                                         return;
                                     }
 
-                                    commandLayout.migrateIcon(R.drawable.ic_command_sleep);
                                     curCommand.setParams("", Integer.parseInt(edit11.getText().toString()));
                                     break;
                                 case HARDWARE_BUTTON:
@@ -133,7 +129,6 @@ public class BuildFragment extends BaseFragmentSaveView {
                                         return;
                                     }
 
-                                    commandLayout.migrateIcon(R.drawable.ic_command_hwkey);
                                     curCommand.setParams(edit11.getText().toString(), Integer.parseInt(edit12.getText().toString()));
                                     break;
                                 case SWIPE:
@@ -146,7 +141,6 @@ public class BuildFragment extends BaseFragmentSaveView {
                                         return;
                                     }
 
-                                    commandLayout.migrateIcon(R.drawable.ic_command_swipe);
                                     curCommand.setParams("",
                                             Integer.parseInt(edit11.getText().toString()),
                                             Integer.parseInt(edit12.getText().toString()),
@@ -164,13 +158,14 @@ public class BuildFragment extends BaseFragmentSaveView {
                                         return;
                                     }
 
-                                    commandLayout.migrateIcon(R.drawable.ic_command_taphold);
                                     curCommand.setParams("",
                                             Integer.parseInt(edit21.getText().toString()),
                                             Integer.parseInt(edit22.getText().toString()),
                                             Integer.parseInt(edit23.getText().toString()));
                                     break;
                             }
+                            // append the commandLayout
+                            final CommandLayout commandLayout = new CommandLayout(getActivity(),curCommand);
 
                             // click listener for delete
                             final ImageView deleteCommand = commandLayout.findViewById(R.id.delete_command);
@@ -181,8 +176,7 @@ public class BuildFragment extends BaseFragmentSaveView {
                                 }
                             });
 
-                            // save the layout
-                            commandLayout.save();
+
                             // add it to our list
                             allCommands.add(curCommand);
 
