@@ -82,15 +82,14 @@ public class BuildFragment extends BaseFragmentSaveView {
                     // create new command object
                     curCommand = new Command();
 
-
                     // implement listeners
                     edit11 = customLayout.findViewById(R.id.edit_11);
                     edit12 = customLayout.findViewById(R.id.edit_12);
                     edit21 = customLayout.findViewById(R.id.edit_21);
                     edit22 = customLayout.findViewById(R.id.edit_22);
                     edit23 = customLayout.findViewById(R.id.edit_23);
-                    initDialogListeners(customLayout);
 
+                    initDialogListeners(customLayout);
 
                     final AlertDialog dialog = builder.create();
                     btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +102,7 @@ public class BuildFragment extends BaseFragmentSaveView {
                         @Override
                         public void onClick(View v) {
                             // append the commandLayout
-                            final CommandLayout commandLayout = new CommandLayout(getActivity());
+                            final CommandLayout commandLayout = new CommandLayout(getActivity(),curCommand);
                             switch (curCommand.getCommand()) {
                                 case TOUCH:
                                     if (edit11.getText().length() == 0 || edit12.getText().length() == 0 ){
@@ -172,12 +171,6 @@ public class BuildFragment extends BaseFragmentSaveView {
                                             Integer.parseInt(edit23.getText().toString()));
                                     break;
                             }
-                            curCommand.setLayout(commandLayout);
-                            commandLayout.handleTextViews(curCommand);
-                            allCommands.add(curCommand);
-
-
-                            // Finally add the rest UI stuff....
 
                             // click listener for delete
                             final ImageView deleteCommand = commandLayout.findViewById(R.id.delete_command);
@@ -188,9 +181,16 @@ public class BuildFragment extends BaseFragmentSaveView {
                                 }
                             });
 
+                            // save the layout
+                            commandLayout.save();
+                            // add it to our list
+                            allCommands.add(curCommand);
+
+                            // append it to parent
                             commandsContainer.removeView(commandLayout);
                             commandsContainer.addView(commandLayout);
 
+                            // save the fragment
                             saveCurrentViewState(root);
 
                         }
@@ -382,7 +382,6 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit21.setInputType(InputType.TYPE_CLASS_NUMBER);
                         edit22.setInputType(InputType.TYPE_CLASS_NUMBER);
                         edit23.setInputType(InputType.TYPE_CLASS_NUMBER);
-
                         curCommand.setCommand(Command.CommandType.TOUCH_AND_HOLD);
 
 
