@@ -49,15 +49,7 @@ public class MainActivity extends BaseActivityFragmentLoader {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(mNavView, navController);
-
-        if (isAccessibilityEnabled()){
-            Log.e(TAG,"Accessibility service is on. Continuing...");
-        } else {
-            Log.e(TAG,"Accessibility service is not enabled.");
-            popAccessibilitySettings();
-
-        }
-
+ 
     }
 
     private void popAccessibilitySettings(){
