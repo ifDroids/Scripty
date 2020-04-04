@@ -30,7 +30,7 @@ public class CommandLayout extends LinearLayout {
 
         @SuppressLint("InflateParams")
         View view = LayoutInflater.from(getContext()).inflate(R.layout.command_preference,null);
-        mThisView = view;
+
         // dynamically draw it
         LinearLayout container = view.findViewById(R.id.command_container);
 
