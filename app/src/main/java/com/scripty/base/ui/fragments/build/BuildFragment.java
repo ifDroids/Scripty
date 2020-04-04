@@ -275,6 +275,9 @@ public class BuildFragment extends BaseFragmentSaveView {
                 edit22.setText("");
                 edit23.setText("");
 
+                // enable the first tv (doesnt work on last case: . we do it there programmatically)
+                edit11.requestFocus();
+
                 switch (v.getId()) {
                     case R.id.command_touch:
                         tvCommand.setText(params + " (Single Touch)");
@@ -378,7 +381,8 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit23.setInputType(InputType.TYPE_CLASS_NUMBER);
                         curCommand.setCommand(Command.CommandType.TOUCH_AND_HOLD);
 
-
+                        // enable the first tv
+                        edit21.requestFocus();
                         break;
                 }
             }
