@@ -5,21 +5,17 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
-import com.scripty.base.models.Command;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,6 +25,7 @@ public class CommandExecutor extends Service {
     private static final String TAG = "CommandExecutor";
     private static final String CHANNEL_ID = "CommandExecutor";
 
+    private Context ego;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -39,15 +36,7 @@ public class CommandExecutor extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e(TAG, "Into the service.");
-        mBundle = intent.getExtras();
-        if (mBundle !=null) {
-            if (mBundle.containsKey("commandsList")) {
-                //noinspection unchecked
-                final List<Command> commands = (List<Command>) mBundle.get("commandsList");
-                if (commands!=null)
-                    Log.e(TAG, commands.get(0).getCommand().toString());
-            }
-        }
+        ego=this;
 
         createNotificationChannel();
         Intent notificationIntent = new Intent(this, MainActivity.class);
@@ -88,39 +77,18 @@ public class CommandExecutor extends Service {
         Log.e(TAG, "Running callAsynchronousTask()...");
         timer = new Timer();
         TimerTask doAsynchronousTask = new TimerTask() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void run() {
-                Log.e(TAG, "Will now run...");
-
-                if (mBundle != null) {
-                    if (mBundle.containsKey("commandsList")) {
-                        // silence the IDEs unchecked cast
-                        //noinspection unchecked
-                        final List<Command> commands = (List<Command>) mBundle.get("commandsList");
-                        if (commands != null) {
-                            // 400 600 is a nice command for my device
-
-                            try {
-                                Process proc = Runtime.getRuntime().exec(new String[] { "su", "-c", "input tap "+commands.get(0).getX() +" "+ commands.get(0).getY()});
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                        } else {
-                            Log.e(TAG,"Command list is null...");
-                        }
-                    } else {
-                        Log.e(TAG,"Bundle does not contain the key...");
-                    }
-                } else {
-                    Log.e(TAG,"Bundle is null...");
-                }
+                AccessibilityClickerService.instance.sendFuckingClick(400,600);
             }
 
         };
+
         Log.e(TAG, "Going to call asynctask...");
-        timer.schedule(doAsynchronousTask, 5000, 100000);
+        timer.schedule(doAsynchronousTask, 2000, 100000);
     }
+
 
     @Override
     public void onDestroy() {

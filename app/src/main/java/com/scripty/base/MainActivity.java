@@ -35,15 +35,15 @@ public class MainActivity extends BaseActivityFragmentLoader {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (!RootUtils.isDeviceRooted()){
-            Toast.makeText(this,"This application needs root access",Toast.LENGTH_LONG).show();
-            finish();
-            moveTaskToBack(true);
-            System.exit(-1);
-            return;
-        } else {
-            Log.e("MainActivity","Its rooted.");
-        }
+//        if (!RootUtils.isDeviceRooted()){
+//            Toast.makeText(this,"This application needs root access",Toast.LENGTH_LONG).show();
+//            finish();
+//            moveTaskToBack(true);
+//            System.exit(-1);
+//            return;
+//        } else {
+//            Log.e("MainActivity","Its rooted.");
+//        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

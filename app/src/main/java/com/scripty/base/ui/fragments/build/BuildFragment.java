@@ -224,16 +224,16 @@ public class BuildFragment extends BaseFragmentSaveView {
             public void onClick(View v) {
 
 
+                Intent serviceIntent = new Intent(mContext, CommandExecutor.class);
+
+                ContextCompat.startForegroundService(mContext, serviceIntent);
+
                 //send this app to background
                 Intent i = new Intent();
                 i.setAction(Intent.ACTION_MAIN);
                 i.addCategory(Intent.CATEGORY_HOME);
                 mContext.startActivity(i);
 
-                Log.e("BuildFragment","Commands size :"+allCommands.size()+"");
-                Intent serviceIntent = new Intent(mContext, CommandExecutor.class);
-                serviceIntent.putExtra("commandsList", (Serializable) allCommands);
-                ContextCompat.startForegroundService(mContext, serviceIntent);
 
             }
         });
