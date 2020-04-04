@@ -400,17 +400,11 @@ public class BuildFragment extends BaseFragmentSaveView {
     }
 
     private void getDisplaySize() {
-        if (getActivity() != null) {
-            Display display = getActivity().getWindowManager().getDefaultDisplay();
+            Display display = ((Activity) mContext).getWindowManager().getDefaultDisplay();
             Point size = new Point();
             display.getSize(size);
             mScreenWidth = size.x;
             mScreenHeight = size.y;
-            Log.e("dsds",mScreenWidth+ " "+mScreenHeight);
-        } else {
-            Log.e("BuildFragment", "Could not get base activity. Exiting...");
-            System.exit(-1);
-        }
     }
 
     private boolean isTargetWidthNotValid(EditText T) {
