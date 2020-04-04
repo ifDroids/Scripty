@@ -5,11 +5,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
-import android.view.Gravity;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,9 @@ public class BuildFragment extends BaseFragmentSaveView {
     private EditText edit22;
     private EditText edit23;
 
+    private int mScreenWidth;
+    private int mScreenHeight;
+
     private static List<Command> allCommands = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
@@ -62,6 +66,9 @@ public class BuildFragment extends BaseFragmentSaveView {
             Log.e("BuildFragment", "Could not get context.Exiting...");
             System.exit(0);
         }
+
+        // Display coords
+        getDisplaySize();
 
         final LinearLayout commandsContainer = root.findViewById(R.id.commands_container);
 
@@ -105,40 +112,40 @@ public class BuildFragment extends BaseFragmentSaveView {
 
                             switch (curCommand.getCommand()) {
                                 case TOUCH:
-                                    if (edit11.getText().length() == 0 || edit12.getText().length() == 0 ){
-                                        Toast.makeText(mContext,"Input fields cant be empty.",Toast.LENGTH_LONG).show();
+                                    if (edit11.getText().length() == 0 || edit12.getText().length() == 0) {
+                                        Toast.makeText(mContext, "Input fields cant be empty.", Toast.LENGTH_LONG).show();
                                         return;
                                     }
-                                    if (edit11.getText().length() > 4 || edit12.getText().length() > 4 ){ // pixel coords cant be higher than 4 digits
-                                        Toast.makeText(mContext,"Dimension coordinates cant be 5-digit numbers",Toast.LENGTH_LONG).show();
+                                    if (isTargetWidthNotValid(edit11) || isTargetHeightNotValid(edit12)){
+                                        Toast.makeText(mContext, "Target coordinates are bigger than screen size.", Toast.LENGTH_LONG).show();
                                         return;
                                     }
 
                                     curCommand.setParams("", Integer.parseInt(edit11.getText().toString()), Integer.parseInt(edit12.getText().toString()));
                                     break;
                                 case SLEEP:
-                                    if (edit11.getText().length() == 0  ){
-                                        Toast.makeText(mContext,"Input fields cant be empty.",Toast.LENGTH_LONG).show();
+                                    if (edit11.getText().length() == 0) {
+                                        Toast.makeText(mContext, "Input fields cant be empty.", Toast.LENGTH_LONG).show();
                                         return;
                                     }
 
                                     curCommand.setParams("", Integer.parseInt(edit11.getText().toString()));
                                     break;
                                 case HARDWARE_BUTTON:
-                                    if (edit12.getText().length() == 0  ){
-                                        Toast.makeText(mContext,"Input fields cant be empty.",Toast.LENGTH_LONG).show();
+                                    if (edit12.getText().length() == 0) {
+                                        Toast.makeText(mContext, "Input fields cant be empty.", Toast.LENGTH_LONG).show();
                                         return;
                                     }
 
                                     curCommand.setParams(edit11.getText().toString(), Integer.parseInt(edit12.getText().toString()));
                                     break;
                                 case SWIPE:
-                                    if (edit11.getText().length() == 0  || edit12.getText().length() == 0 || edit21.getText().length() == 0 || edit22.getText().length() == 0 || edit23.getText().length() == 0){
-                                        Toast.makeText(mContext,"Input fields cant be empty.",Toast.LENGTH_LONG).show();
+                                    if (edit11.getText().length() == 0 || edit12.getText().length() == 0 || edit21.getText().length() == 0 || edit22.getText().length() == 0 || edit23.getText().length() == 0) {
+                                        Toast.makeText(mContext, "Input fields cant be empty.", Toast.LENGTH_LONG).show();
                                         return;
                                     }
-                                    if (edit11.getText().length()  > 4  || edit12.getText().length()  > 4 || edit21.getText().length()  > 4 || edit22.getText().length()  > 4 ){
-                                        Toast.makeText(mContext,"Dimension coordinates cant be 5-digit numbers",Toast.LENGTH_LONG).show();
+                                    if (isTargetWidthNotValid(edit11) || isTargetHeightNotValid(edit12) || isTargetWidthNotValid(edit21) || isTargetHeightNotValid(edit22)){
+                                        Toast.makeText(mContext, "Target coordinates are bigger than screen size.", Toast.LENGTH_LONG).show();
                                         return;
                                     }
 
@@ -150,12 +157,12 @@ public class BuildFragment extends BaseFragmentSaveView {
                                             Integer.parseInt(edit23.getText().toString()));
                                     break;
                                 case TOUCH_AND_HOLD:
-                                    if (  edit21.getText().length() == 0 || edit22.getText().length() == 0 || edit23.getText().length() == 0){
-                                        Toast.makeText(mContext,"Input fields cant be empty.",Toast.LENGTH_LONG).show();
+                                    if (edit21.getText().length() == 0 || edit22.getText().length() == 0 || edit23.getText().length() == 0) {
+                                        Toast.makeText(mContext, "Input fields cant be empty.", Toast.LENGTH_LONG).show();
                                         return;
                                     }
-                                    if (  edit21.getText().length() > 4 || edit22.getText().length() > 4 ){
-                                        Toast.makeText(mContext,"Dimension coordinates cant be 5-digit numbers",Toast.LENGTH_LONG).show();
+                                    if (isTargetWidthNotValid(edit21) || isTargetHeightNotValid(edit22)){
+                                        Toast.makeText(mContext, "Target coordinates are bigger than screen size.", Toast.LENGTH_LONG).show();
                                         return;
                                     }
 
@@ -166,7 +173,7 @@ public class BuildFragment extends BaseFragmentSaveView {
                                     break;
                             }
                             // append the commandLayout
-                            final CommandLayout commandLayout = new CommandLayout(getActivity(),curCommand);
+                            final CommandLayout commandLayout = new CommandLayout(getActivity(), curCommand);
 
                             // click listener for delete
                             final ImageView deleteCommand = commandLayout.findViewById(R.id.delete_command);
@@ -211,10 +218,10 @@ public class BuildFragment extends BaseFragmentSaveView {
         mCommandRunner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("BuildFragment",allCommands.size()+"");
-                int x=0;
-                for(Command c : allCommands){
-                    Log.e("BuildFragment",c.toString() + " index:" +x);
+                Log.e("BuildFragment", allCommands.size() + "");
+                int x = 0;
+                for (Command c : allCommands) {
+                    Log.e("BuildFragment", c.toString() + " index:" + x);
                     x++;
                 }
             }
@@ -236,7 +243,6 @@ public class BuildFragment extends BaseFragmentSaveView {
         final ImageView commandHardwareKey = dialogView.findViewById(R.id.command_hardware);
         final ImageView commandSwipe = dialogView.findViewById(R.id.command_swipe);
         final ImageView commandTouchHold = dialogView.findViewById(R.id.command_touchhold);
-
 
 
         final TextView tvCommand = dialogView.findViewById(R.id.parameters_and_command);
@@ -289,7 +295,7 @@ public class BuildFragment extends BaseFragmentSaveView {
                         edit12.setInputType(InputType.TYPE_CLASS_NUMBER);
 
                         curCommand.setCommand(Command.CommandType.TOUCH);
-                         break;
+                        break;
                     case R.id.command_sleep:
                         tvCommand.setText(params + " (Sleep)");
                         commandSleep.setColorFilter(ContextCompat.getColor(mContext, R.color.colorAccent));
@@ -372,25 +378,47 @@ public class BuildFragment extends BaseFragmentSaveView {
 
     }
 
-    private void initDialog(View v){
+    private void initDialog(View v) {
         final LinearLayout commandsIconsContainer = v.findViewById(R.id.commands_icons_container);
         final LinearLayout paramsFirst = v.findViewById(R.id.params_first_line);
         final LinearLayout paramsSecond = v.findViewById(R.id.params_second_line);
 
-        for (int i=0;i<commandsIconsContainer.getChildCount(); i++ )
+        for (int i = 0; i < commandsIconsContainer.getChildCount(); i++)
             if (commandsIconsContainer.getChildAt(i) instanceof ImageView)
-                ((ImageView)commandsIconsContainer.getChildAt(i)).setColorFilter(null);
+                ((ImageView) commandsIconsContainer.getChildAt(i)).setColorFilter(null);
 
-        for(int i=0;i<paramsFirst.getChildCount();i++)
+        for (int i = 0; i < paramsFirst.getChildCount(); i++)
             if (paramsFirst.getChildAt(i) instanceof EditText) {
                 ((EditText) paramsFirst.getChildAt(i)).setText("");
                 paramsFirst.getChildAt(i).setVisibility(View.GONE);
             }
-        for(int i=0;i<paramsSecond.getChildCount();i++)
+        for (int i = 0; i < paramsSecond.getChildCount(); i++)
             if (paramsSecond.getChildAt(i) instanceof EditText) {
                 ((EditText) paramsSecond.getChildAt(i)).setText("");
                 paramsSecond.getChildAt(i).setVisibility(View.GONE);
             }
+    }
+
+    private void getDisplaySize() {
+        if (getActivity() != null) {
+            Display display = getActivity().getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            mScreenWidth = size.x;
+            mScreenHeight = size.y;
+            Log.e("dsds",mScreenWidth+ " "+mScreenHeight);
+        } else {
+            Log.e("BuildFragment", "Could not get base activity. Exiting...");
+            System.exit(-1);
+        }
+    }
+
+    private boolean isTargetWidthNotValid(EditText T) {
+        return Integer.parseInt(T.getText().toString()) > mScreenWidth;
+    }
+
+    private boolean isTargetHeightNotValid(EditText T) {
+        return Integer.parseInt(T.getText().toString()) > mScreenHeight;
     }
 }
 
