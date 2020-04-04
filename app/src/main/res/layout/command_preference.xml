@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/commands"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/round_frame_bg_command"
@@ -25,16 +26,15 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/placeholder"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:src="@android:drawable/ic_dialog_alert" />
-
 
         <TextView
             android:id="@+id/tv1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="1.6"
             android:gravity="center"
             android:text="@string/placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -43,10 +43,10 @@
 
         <TextView
             android:id="@+id/tv2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="1.6"
             android:gravity="center"
             android:text="@string/placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -55,10 +55,10 @@
 
         <TextView
             android:id="@+id/tv3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="1.6"
             android:gravity="center"
             android:text="@string/placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -67,10 +67,10 @@
 
         <TextView
             android:id="@+id/tv4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="1.6"
             android:gravity="center"
             android:text="@string/placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -79,20 +79,15 @@
 
         <TextView
             android:id="@+id/tv5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="1.6"
             android:gravity="center"
             android:text="@string/placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv4"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/delete_command"
@@ -100,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:contentDescription="@string/placeholder"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:src="@drawable/ic_delete_command" />
 
     </LinearLayout>
