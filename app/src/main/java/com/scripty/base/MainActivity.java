@@ -1,7 +1,9 @@
 package com.scripty.base;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
+import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,13 +18,12 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import com.scripty.base.libs.BaseFragmentSaveView.wrappers.BaseActivityFragmentLoader;
 
-import java.io.File;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivityFragmentLoader {
 
+    private static final String TAG = "MainActivity";
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.drawer_layout)
@@ -32,18 +33,8 @@ public class MainActivity extends BaseActivityFragmentLoader {
 
     private AppBarConfiguration mAppBarConfiguration;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        if (!RootUtils.isDeviceRooted()){
-//            Toast.makeText(this,"This application needs root access",Toast.LENGTH_LONG).show();
-//            finish();
-//            moveTaskToBack(true);
-//            System.exit(-1);
-//            return;
-//        } else {
-//            Log.e("MainActivity","Its rooted.");
-//        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -59,17 +50,69 @@ public class MainActivity extends BaseActivityFragmentLoader {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(mNavView, navController);
 
+        if (isAccessibilityEnabled()){
+            Log.e(TAG,"Accessibility service is on. Continuing...");
+        } else {
+            Log.e(TAG,"Accessibility service is not enabled.");
+            popAccessibilitySettings();
+
+        }
 
     }
 
+    private void popAccessibilitySettings(){
+        Toast.makeText(this,"Please enable Scripty accessbility service",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onPostResume() {
+        if (isAccessibilityEnabled()){
+            Log.e(TAG,"Accessibility service is on. Continuing...");
+        } else {
+            Log.e(TAG,"Accessibility service is not enabled.");
+            popAccessibilitySettings();
+        }
+        super.onPostResume();
+    }
+
+    public boolean isAccessibilityEnabled(){
+        int accessibilityEnabled = 0;
+
+        try {
+            accessibilityEnabled = Settings.Secure.getInt(this.getContentResolver(),android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');
+
+        if (accessibilityEnabled==1) {
+            String settingValue = Settings.Secure.getString(getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+
+            if (settingValue != null) {
+                mStringColonSplitter.setString(settingValue);
+                while (mStringColonSplitter.hasNext()) {
+                    String accessibilityService = mStringColonSplitter.next();
+                    if (accessibilityService.contains("AccessibilityClickerService")){
+                        return true;
+                    }
+                }
+            }
+
+
+        }
+        else {
+            return false;
+        }
+        return false;
+    }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-
     }
-
-
 
     @Override
     public boolean onSupportNavigateUp() {
