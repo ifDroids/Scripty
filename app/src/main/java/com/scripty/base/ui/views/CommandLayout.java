@@ -24,6 +24,7 @@ public class CommandLayout extends LinearLayout {
     private Activity mActivity;
     private View mThisView;
     private Command mCommand;
+    private LinearLayout mContainer;
 
     public CommandLayout(Activity act, Command command){
         super(act,null);
@@ -34,12 +35,12 @@ public class CommandLayout extends LinearLayout {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.command_preference,null);
 
         // dynamically draw it
-        LinearLayout container = view.findViewById(R.id.command_container);
+        mContainer = view.findViewById(R.id.command_container);
 
         LinearLayout.LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         params.setMargins(0,0,0,20);
 
-        container.setLayoutParams(params);
+        mContainer.setLayoutParams(params);
 
         // listeners
         ImageView imageDelete = view.findViewById(R.id.delete_command);
@@ -70,88 +71,80 @@ public class CommandLayout extends LinearLayout {
         LinearLayout commandsLinear = mThisView.findViewById(R.id.commands);
         float container_ParamsTotalWeight = commandsLinear.getWeightSum();
 
-        // reset weights
+        // 1.6f is the default weight as declared at the layout.xml
         LayoutParams paramsTV = new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1.6f );
-        tv1.setLayoutParams(paramsTV);
-        tv2.setLayoutParams(paramsTV);
-        tv3.setLayoutParams(paramsTV);
-        tv4.setLayoutParams(paramsTV);
-        tv5.setLayoutParams(paramsTV);
+
+        // reset weights
+        for (int i=0;i<mContainer.getChildCount(); i++ ){
+            if (mContainer.getChildAt(i) instanceof TextView){
+                mContainer.getChildAt(i).setLayoutParams(paramsTV);
+                ((TextView) mContainer.getChildAt(i)).setGravity(Gravity.CENTER);
+            }
+        }
 
         switch (mCommand.getCommand()){
             case TOUCH:
-                mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
-                mThisView.findViewById(R.id.tv2).setVisibility(View.VISIBLE);
-                mThisView.findViewById(R.id.tv3).setVisibility(View.GONE);
-                mThisView.findViewById(R.id.tv4).setVisibility(View.GONE);
-                mThisView.findViewById(R.id.tv5).setVisibility(View.GONE);
-                ( (TextView) mThisView.findViewById(R.id.tv1)).setText("X: "+mCommand.getX());
-                ( (TextView) mThisView.findViewById(R.id.tv2)).setText("Y: "+mCommand.getY());
+                tv1.setVisibility(View.VISIBLE);
+                tv2.setVisibility(View.VISIBLE);
+                tv3.setVisibility(View.GONE);
+                tv4.setVisibility(View.GONE);
+                tv5.setVisibility(View.GONE);
+                tv1.setText("X: "+mCommand.getX());
+                tv2.setText("Y: "+mCommand.getY());
                 img.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_command_touch));
 
                 // container_ParamsTotalWeight/2.0f = "the params weight / params quantity"
                 paramsTV = new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, (container_ParamsTotalWeight/2.0f));
                 paramsTV.gravity = Gravity.CENTER;
-                tv1.setGravity(Gravity.CENTER);
-                tv2.setGravity(Gravity.CENTER);
                 tv1.setLayoutParams(paramsTV);
                 tv2.setLayoutParams(paramsTV);
                 break;
             case HARDWARE_BUTTON:
-                mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
-                mThisView.findViewById(R.id.tv2).setVisibility(View.VISIBLE);
-                mThisView.findViewById(R.id.tv3).setVisibility(View.GONE);
-                mThisView.findViewById(R.id.tv4).setVisibility(View.GONE);
-                mThisView.findViewById(R.id.tv5).setVisibility(View.GONE);
-
-                ( (TextView) mThisView.findViewById(R.id.tv1)).setText("Button: "+mCommand.getHwButton());
-                ( (TextView) mThisView.findViewById(R.id.tv2)).setText("Duration: "+mCommand.getDuration()+ " ms");
+                tv1.setVisibility(View.VISIBLE);
+                tv2.setVisibility(View.VISIBLE);
+                tv3.setVisibility(View.GONE);
+                tv4.setVisibility(View.GONE);
+                tv5.setVisibility(View.GONE);
+                tv1.setText("Button: "+mCommand.getHwButton());
+                tv2.setText("Duration: "+mCommand.getDuration()+ " ms");
                 img.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_command_hwkey));
 
                 // container_ParamsTotalWeight/2.0f = "the params weight / params quantity"
                 paramsTV = new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, (container_ParamsTotalWeight/2.0f));
                 paramsTV.gravity = Gravity.CENTER;
-                tv1.setGravity(Gravity.CENTER);
-                tv2.setGravity(Gravity.CENTER);
                 tv1.setLayoutParams(paramsTV);
                 tv2.setLayoutParams(paramsTV);
                 break;
             case SLEEP:
-                mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
-                mThisView.findViewById(R.id.tv2).setVisibility(View.GONE);
-                mThisView.findViewById(R.id.tv3).setVisibility(View.GONE);
-                mThisView.findViewById(R.id.tv4).setVisibility(View.GONE);
-                mThisView.findViewById(R.id.tv5).setVisibility(View.GONE);
-                ( (TextView) mThisView.findViewById(R.id.tv1)).setText("Duration: "+mCommand.getDuration() + " ms");
+                tv1.setVisibility(View.VISIBLE);
+                tv2.setVisibility(View.GONE);
+                tv3.setVisibility(View.GONE);
+                tv4.setVisibility(View.GONE);
+                tv5.setVisibility(View.GONE);
+                tv1.setText("Duration: "+mCommand.getDuration() + " ms");
                 img.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_command_sleep));
 
                 // container_ParamsTotalWeight/2.0f = "the params weight / params quantity"
                 paramsTV = new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, container_ParamsTotalWeight );
                 paramsTV.gravity = Gravity.CENTER;
-                tv1.setGravity(Gravity.CENTER);
                 tv1.setLayoutParams(paramsTV);
                 break;
             case SWIPE:
-                mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
-                mThisView.findViewById(R.id.tv2).setVisibility(View.VISIBLE);
-                mThisView.findViewById(R.id.tv3).setVisibility(View.VISIBLE);
-                mThisView.findViewById(R.id.tv4).setVisibility(View.VISIBLE);
-                mThisView.findViewById(R.id.tv5).setVisibility(View.VISIBLE);
-                ( (TextView) mThisView.findViewById(R.id.tv1)).setText("fromX:"+mCommand.getFromX());
-                ( (TextView) mThisView.findViewById(R.id.tv2)).setText("fromY:"+mCommand.getFromY() );
-                ( (TextView) mThisView.findViewById(R.id.tv3)).setText("toX:"+mCommand.getX());
-                ( (TextView) mThisView.findViewById(R.id.tv4)).setText("toY:"+mCommand.getY());
-                ( (TextView) mThisView.findViewById(R.id.tv5)).setText("Speed:"+mCommand.getSpeed()+ " ms");
+                tv1.setVisibility(View.VISIBLE);
+                tv2.setVisibility(View.VISIBLE);
+                tv3.setVisibility(View.VISIBLE);
+                tv4.setVisibility(View.VISIBLE);
+                tv5.setVisibility(View.VISIBLE);
+                tv1.setText("fromX:"+mCommand.getFromX());
+                tv2.setText("fromY:"+mCommand.getFromY() );
+                tv3.setText("toX:"+mCommand.getX());
+                tv4.setText("toY:"+mCommand.getY());
+                tv5.setText("Speed:"+mCommand.getSpeed()+ " ms");
                 img.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_command_swipe));
 
                 // container_ParamsTotalWeight/2.0f = "the params weight / params quantity"
                 paramsTV = new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, (container_ParamsTotalWeight/5.0f));
                 paramsTV.gravity = Gravity.CENTER;
-                tv1.setGravity(Gravity.CENTER);
-                tv2.setGravity(Gravity.CENTER);
-                tv3.setGravity(Gravity.CENTER);
-                tv4.setGravity(Gravity.CENTER);
-                tv5.setGravity(Gravity.CENTER);
                 tv1.setLayoutParams(paramsTV);
                 tv2.setLayoutParams(paramsTV);
                 tv3.setLayoutParams(paramsTV);
@@ -159,22 +152,19 @@ public class CommandLayout extends LinearLayout {
                 tv5.setLayoutParams(paramsTV);
                 break;
             case TOUCH_AND_HOLD:
-                mThisView.findViewById(R.id.tv1).setVisibility(View.VISIBLE);
-                mThisView.findViewById(R.id.tv2).setVisibility(View.VISIBLE);
-                mThisView.findViewById(R.id.tv3).setVisibility(View.VISIBLE);
-                mThisView.findViewById(R.id.tv4).setVisibility(View.GONE);
-                mThisView.findViewById(R.id.tv5).setVisibility(View.GONE);
-                ( (TextView) mThisView.findViewById(R.id.tv1)).setText("X: "+mCommand.getX());
-                ( (TextView) mThisView.findViewById(R.id.tv2)).setText("Y: "+mCommand.getY() );
-                ( (TextView) mThisView.findViewById(R.id.tv3)).setText("Duration: "+mCommand.getX()+ " ms");
+                tv1.setVisibility(View.VISIBLE);
+                tv2.setVisibility(View.VISIBLE);
+                tv3.setVisibility(View.VISIBLE);
+                tv4.setVisibility(View.GONE);
+                tv5.setVisibility(View.GONE);
+                tv1.setText("X: "+mCommand.getX());
+                tv2.setText("Y: "+mCommand.getY() );
+                tv3.setText("Duration: "+mCommand.getX()+ " ms");
                 img.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_command_taphold));
 
                 // container_ParamsTotalWeight/2.0f = "the params weight / params quantity"
                 paramsTV = new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, (container_ParamsTotalWeight/3.0f));
                 paramsTV.gravity = Gravity.CENTER;
-                tv1.setGravity(Gravity.CENTER);
-                tv2.setGravity(Gravity.CENTER);
-                tv3.setGravity(Gravity.CENTER);
                 tv1.setLayoutParams(paramsTV);
                 tv2.setLayoutParams(paramsTV);
                 tv3.setLayoutParams(paramsTV);
